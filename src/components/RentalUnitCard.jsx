@@ -15,7 +15,7 @@ const RentalUnitCard = () => {
     { icon: Home, text: 'Fully Furnished', color: 'text-amber-600' },
     { icon: DollarSign, text: 'American Standard', color: 'text-green-600' },
     { icon: Wifi, text: 'Starlink Internet Included', color: 'text-indigo-600' },
-    { icon: Zap, text: 'All Utilities Included', color: 'text-yellow-600', note: 'short' },
+    { icon: Zap, text: 'Utilities Included for Short-Term Stays', color: 'text-yellow-600', note: 'short' },
   ];
 
   const pricing = [
