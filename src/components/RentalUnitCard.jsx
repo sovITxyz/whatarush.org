@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Bed, Bath, MapPin, DollarSign, Wifi, Zap, Home, Bitcoin, CreditCard, Banknote } from 'lucide-react';
+import { Bed, Bath, MapPin, DollarSign, Wifi, Zap, Home, Bitcoin, Banknote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const RentalUnitCard = () => {
@@ -27,7 +27,6 @@ const RentalUnitCard = () => {
   const paymentMethods = [
     { icon: Banknote, text: 'Cash', color: 'text-green-600' },
     { icon: Bitcoin, text: 'Bitcoin', color: 'text-orange-500' },
-    { icon: CreditCard, text: 'Credit Card', color: 'text-blue-600' },
   ];
 
   return (

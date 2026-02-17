@@ -1,8 +1,10 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
-const HorseCard = ({ name, image, story, index, onLearnMore }) => {
+const HorseCard = ({ name, images, imgTick, story, index, onLearnMore }) => {
+  const currentIndex = imgTick % images.length;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -12,13 +14,20 @@ const HorseCard = ({ name, image, story, index, onLearnMore }) => {
       className="group"
     >
       <div onClick={onLearnMore} className="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:scale-105">
-        {/* Image */}
+        {/* Image with crossfade */}
         <div className="relative overflow-hidden h-[300px]">
-          <img
-            src={image}
-            alt={`${name} - Beautiful horse at What A Rush Riding Stables`}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentIndex}
+              src={images[currentIndex]}
+              alt={`${name} - Beautiful horse at What A Rush Riding Stables`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, ease: 'easeInOut' }}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </AnimatePresence>
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
 

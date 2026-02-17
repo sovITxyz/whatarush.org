@@ -1,10 +1,20 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Play, X } from 'lucide-react';
 import RentalUnitCard from './RentalUnitCard';
 import PropertyGallery from './PropertyGallery';
 import { Button } from '@/components/ui/button';
 
 const AvailableUnitsSection = () => {
+  const [showVideo, setShowVideo] = useState(false);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (showVideo && videoRef.current) {
+      videoRef.current.play();
+    }
+  }, [showVideo]);
+
   const handleBooking = () => {
     window.open('https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested', '_blank');
   };
@@ -25,7 +35,47 @@ const AvailableUnitsSection = () => {
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Your perfect beachfront retreat in La Libertad, El Salvador
           </p>
+          <button
+            onClick={() => setShowVideo(true)}
+            className="mt-4 inline-flex items-center gap-2 text-teal-600 hover:text-teal-700 font-semibold text-lg transition-colors duration-300"
+          >
+            <Play className="w-5 h-5 fill-current" />
+            Watch Video Tour
+          </button>
         </motion.div>
+
+        {/* Fullscreen video overlay */}
+        <AnimatePresence>
+          {showVideo && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+              onClick={() => setShowVideo(false)}
+            >
+              <button
+                onClick={() => setShowVideo(false)}
+                className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-colors text-white"
+                aria-label="Close video"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              <div className="w-full h-full flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
+                <video
+                  ref={videoRef}
+                  src="/images/added2/palaparental.mp4"
+                  controls
+                  playsInline
+                  autoPlay
+                  onEnded={() => setShowVideo(false)}
+                  className="max-w-full max-h-full object-contain"
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="relative mb-0 lg:mb-0">
           {/* Left: Rental Details - determines container height */}

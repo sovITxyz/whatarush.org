@@ -16,25 +16,25 @@ const services = [
   {
     name: 'Horse/Human Therapy Sessions',
     icon: Heart,
-    price: null,
-    priceLabel: 'Price coming soon',
-    description: 'Therapeutic sessions connecting horses and humans for healing and growth.',
+    price: 'custom',
+    priceLabel: 'Customized Package',
+    description: 'Therapeutic sessions connecting horses and humans for healing and growth. Packages built for your individual needs — contact us for details.',
     color: 'from-rose-500 to-pink-500',
   },
   {
     name: 'Horsemanship Training Lessons',
     icon: GraduationCap,
-    price: null,
-    priceLabel: 'Price coming soon',
-    description: 'Learn the art of horsemanship from experienced trainers.',
+    price: 'custom',
+    priceLabel: 'Customized Package',
+    description: 'Learn the art of horsemanship from experienced trainers. Packages built for your individual needs — contact us for details.',
     color: 'from-amber-500 to-orange-500',
   },
   {
     name: 'Riding Lessons',
     icon: Users,
-    price: null,
-    priceLabel: 'Price coming soon',
-    description: 'Structured riding lessons for all skill levels.',
+    price: 'custom',
+    priceLabel: 'Customized Package',
+    description: 'Structured riding lessons for all skill levels. Packages built for your individual needs — contact us for details.',
     color: 'from-teal-500 to-cyan-500',
   },
 ];
@@ -92,8 +92,8 @@ const ServicesSection = () => {
                   )}
 
                   <div className="flex items-center gap-2 mb-4">
-                    <DollarSign className="w-5 h-5 text-green-600" />
-                    <span className={`text-lg font-bold ${service.price ? 'text-green-600' : 'text-gray-400 italic'}`}>
+                    {service.price !== 'custom' && <DollarSign className="w-5 h-5 text-green-600" />}
+                    <span className={`text-lg font-bold ${service.price === 'custom' ? 'text-amber-600' : service.price ? 'text-green-600' : 'text-gray-400 italic'}`}>
                       {service.priceLabel}
                     </span>
                   </div>

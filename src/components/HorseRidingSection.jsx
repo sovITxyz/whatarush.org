@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import HorseCard from './HorseCard';
 import { Button } from '@/components/ui/button';
@@ -6,27 +6,53 @@ import { Button } from '@/components/ui/button';
 const horses = [
   {
     name: 'Paco',
-    image: '/images/horses/paco.jpeg',
+    images: [
+      '/images/horses/paco.jpeg',
+      '/images/added/paco2.jpeg',
+      '/images/added/paco3.jpeg',
+    ],
     story: 'A gentle gaited Peruvian Horse with a heart of a champion. Paco offers a smooth, almost hover craft like, ride over the terrain. Perfect for intermediate or first time riders. Paco will make you passionate about riding because he is a pure joy to ride.'
   },
   {
     name: 'Congrejeto',
-    image: '/images/horses/congrejeto.jpeg',
-    story: 'An elegant strides Freshian Horse. This species is known for their Knights in Shining Armor. They are the most handsome of Horses. Gentle and patient- ideal for beginners and intermediate riders. Calm demeanor, safe and confident riding experience.'
+    images: [
+      '/images/horses/congrejeto.jpeg',
+      '/images/added/Congrejeto1.jpeg',
+      '/images/added/Congrejeto2.jpeg',
+      '/images/added/Congrejeto3.jpeg',
+      '/images/added2/con.jpeg',
+    ],
+    story: 'An elegant strided Freshian Horse. This species is known for their Knights in Shining Armor. They are the most handsome of Horses. Gentle and patient- ideal for beginners and intermediate riders. Calm demeanor, safe and confident riding experience.'
   },
   {
     name: 'Tequilla',
-    image: '/images/horses/tequilla.jpeg',
+    images: [
+      '/images/horses/tequilla.jpeg',
+      '/images/added/Tequilla.jpeg',
+      '/images/added/Tequilla2.jpeg',
+      '/images/added2/tiq.jpeg',
+      '/images/added2/tiq-funnyface.jpeg',
+    ],
     story: 'A spanish gaited horse with spirit and endurance. He is bold, beautiful with flowing mane and best suited for experienced equestrians who have practiced harmony with horses and who enjoy the thrill of the ride.'
   },
   {
     name: 'Victorioso',
-    image: '/images/horses/victorioso.png',
+    images: [
+      '/images/horses/victorioso.png',
+      '/images/added/Victorioso.jpeg',
+      '/images/added/Victorioso2.jpeg',
+      '/images/added/Victorioso1.png',
+      '/images/added2/vic.jpeg',
+    ],
     story: 'Known for his power and fluid grace. He combines strength with elegance like poetry in motion. This magnificent horse is perfect for riders seeking adventure and a rewarding experience as you connect with nature and beauty.'
   },
   {
     name: 'Carbonero',
-    image: '/images/horses/carbonero.jpeg',
+    images: [
+      '/images/horses/carbonero.jpeg',
+      '/images/added/Carbonero.jpeg',
+      '/images/added2/carb.jpeg',
+    ],
     story: 'Wise and experienced Spanish gaited horse. This guy offers an enjoyable nature ride on the back of a smooth operator. Carbonero is very intuitive and aware of his rider. He enjoys the ride as much as his rider does. He is steady, calm and reliable.'
   }
 ];
@@ -34,8 +60,18 @@ const horses = [
 const HorseRidingSection = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [direction, setDirection] = useState(0);
+  const touchStartX = useRef(null);
 
   const isExpanded = expandedIndex !== null;
+
+  // Single global tick that drives all horse card image changes in sync
+  const [imgTick, setImgTick] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setImgTick((prev) => prev + 1);
+    }, 9000);
+    return () => clearInterval(timer);
+  }, []);
 
   const openExpanded = useCallback((index) => {
     setDirection(0);
@@ -55,6 +91,20 @@ const HorseRidingSection = () => {
     setDirection(1);
     setExpandedIndex((prev) => (prev === horses.length - 1 ? 0 : prev + 1));
   }, []);
+
+  const handleTouchStart = useCallback((e) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback((e) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) goToNext();
+      else goToPrevious();
+    }
+    touchStartX.current = null;
+  }, [goToNext, goToPrevious]);
 
   const slideVariants = {
     enter: (dir) => ({
@@ -95,7 +145,8 @@ const HorseRidingSection = () => {
             <HorseCard
               key={horse.name}
               name={horse.name}
-              image={horse.image}
+              images={horse.images}
+              imgTick={imgTick}
               story={horse.story}
               index={index}
               onLearnMore={() => openExpanded(index)}
@@ -121,6 +172,8 @@ const HorseRidingSection = () => {
                 transition={{ duration: 0.3 }}
                 className="relative w-full max-w-2xl"
                 onClick={(e) => e.stopPropagation()}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
               >
                 {/* Left Arrow */}
                 <button
@@ -149,9 +202,9 @@ const HorseRidingSection = () => {
                       {/* Expanded Image */}
                       <div className="relative overflow-hidden h-[450px]">
                         <img
-                          src={horses[expandedIndex].image}
+                          src={horses[expandedIndex].images[imgTick % horses[expandedIndex].images.length]}
                           alt={`${horses[expandedIndex].name} - Beautiful horse at What A Rush Riding Stables`}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover transition-opacity duration-700"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                         <div className="absolute bottom-0 left-0 right-0 p-6">
