@@ -94,10 +94,10 @@ const photos = buildGallery([
 ]);
 
 const videos = [
+  { src: `${basePath}/beachride.mov` },
   { src: `${basePath}/video1.mov` },
   { src: `${basePath}/video2.MP4` },
   { src: `${basePath}/video3.mp4` },
-  { src: `${basePath}/beachride.mov` },
   { src: `${basePath2}/ridingvideo1.mp4` },
   { src: `${basePath2}/ridingvideo2.mp4` },
   { src: `${basePath2}/ridingvideo3.mp4` },
