@@ -35,13 +35,15 @@ const AvailableUnitsSection = () => {
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Your perfect beachfront retreat in La Libertad, El Salvador
           </p>
-          <button
+          <motion.button
             onClick={() => setShowVideo(true)}
-            className="mt-4 inline-flex items-center gap-2 text-teal-600 hover:text-teal-700 font-semibold text-lg transition-colors duration-300"
+            animate={{ scale: [1, 1.16, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+            className="mt-4 inline-flex items-center gap-2 text-teal-600 hover:text-teal-700 font-semibold text-[22px] transition-colors duration-300"
           >
             <Play className="w-5 h-5 fill-current" />
             Watch Video Tour
-          </button>
+          </motion.button>
         </motion.div>
 
         {/* Fullscreen video overlay */}

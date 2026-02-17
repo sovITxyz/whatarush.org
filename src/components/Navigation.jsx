@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Home as HomeIcon, User, Sparkles, Camera, Building } from 'lucide-react';
+import { Menu, X, Home as HomeIcon, User, Sparkles, Camera, Users, Building } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const WhatsAppIcon = ({ className }) => (
@@ -35,6 +35,7 @@ const Navigation = () => {
     { name: 'Horses', icon: User, sectionId: 'horse-riding' },
     { name: 'Services', icon: Sparkles, sectionId: 'services' },
     { name: 'Gallery', icon: Camera, sectionId: 'horse-gallery' },
+    { name: 'Owners', icon: Users, sectionId: 'meet-the-owners' },
     { name: 'Rental', icon: Building, sectionId: 'available-units' }
   ];
 
