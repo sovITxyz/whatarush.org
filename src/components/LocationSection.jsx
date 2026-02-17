@@ -42,6 +42,7 @@ const LocationSection = ({ title, mapUrl, image }) => {
                 <img
                   src={image}
                   alt="Location"
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
               </div>

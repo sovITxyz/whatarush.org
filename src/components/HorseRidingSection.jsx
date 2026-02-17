@@ -8,8 +8,8 @@ const horses = [
     name: 'Paco',
     images: [
       '/images/horses/paco.jpeg',
-      '/images/added/paco2.jpeg',
-      '/images/added/paco3.jpeg',
+      '/images/horses/paco2.jpeg',
+      '/images/horses/paco3.jpeg',
     ],
     story: 'A gentle gaited Peruvian Horse with a heart of a champion. Paco offers a smooth, almost hover craft like, ride over the terrain. Perfect for intermediate or first time riders. Paco will make you passionate about riding because he is a pure joy to ride.'
   },
@@ -17,10 +17,10 @@ const horses = [
     name: 'Congrejeto',
     images: [
       '/images/horses/congrejeto.jpeg',
-      '/images/added/Congrejeto1.jpeg',
-      '/images/added/Congrejeto2.jpeg',
-      '/images/added/Congrejeto3.jpeg',
-      '/images/added2/con.jpeg',
+      '/images/horses/Congrejeto1.jpeg',
+      '/images/horses/Congrejeto2.jpeg',
+      '/images/horses/Congrejeto3.jpeg',
+      '/images/horses/con.jpeg',
     ],
     story: 'An elegant strided Freshian Horse. This species is known for their Knights in Shining Armor. They are the most handsome of Horses. Gentle and patient- ideal for beginners and intermediate riders. Calm demeanor, safe and confident riding experience.'
   },
@@ -28,10 +28,10 @@ const horses = [
     name: 'Tequilla',
     images: [
       '/images/horses/tequilla.jpeg',
-      '/images/added/Tequilla.jpeg',
-      '/images/added/Tequilla2.jpeg',
-      '/images/added2/tiq.jpeg',
-      '/images/added2/tiq-funnyface.jpeg',
+      '/images/horses/Tequilla.jpeg',
+      '/images/horses/Tequilla2.jpeg',
+      '/images/horses/tiq.jpeg',
+      '/images/horses/tiq-funnyface.jpeg',
     ],
     story: 'A spanish gaited horse with spirit and endurance. He is bold, beautiful with flowing mane and best suited for experienced equestrians who have practiced harmony with horses and who enjoy the thrill of the ride.'
   },
@@ -39,10 +39,10 @@ const horses = [
     name: 'Victorioso',
     images: [
       '/images/horses/victorioso.png',
-      '/images/added/Victorioso.jpeg',
-      '/images/added/Victorioso2.jpeg',
-      '/images/added/Victorioso1.png',
-      '/images/added2/vic.jpeg',
+      '/images/horses/Victorioso.jpeg',
+      '/images/horses/Victorioso2.jpeg',
+      '/images/horses/Victorioso1.png',
+      '/images/horses/vic.jpeg',
     ],
     story: 'Known for his power and fluid grace. He combines strength with elegance like poetry in motion. This magnificent horse is perfect for riders seeking adventure and a rewarding experience as you connect with nature and beauty.'
   },
@@ -50,8 +50,8 @@ const horses = [
     name: 'Carbonero',
     images: [
       '/images/horses/carbonero.jpeg',
-      '/images/added/Carbonero.jpeg',
-      '/images/added2/carb.jpeg',
+      '/images/horses/Carbonero.jpeg',
+      '/images/horses/carb.jpeg',
     ],
     story: 'Wise and experienced Spanish gaited horse. This guy offers an enjoyable nature ride on the back of a smooth operator. Carbonero is very intuitive and aware of his rider. He enjoys the ride as much as his rider does. He is steady, calm and reliable.'
   }

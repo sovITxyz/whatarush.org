@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
-import HorseRidingSection from '@/components/HorseRidingSection';
-import HorseGallery from '@/components/HorseGallery';
-import ServicesSection from '@/components/ServicesSection';
-import AvailableUnitsSection from '@/components/AvailableUnitsSection';
-import LocationSection from '@/components/LocationSection';
-import MeetTheOwners from '@/components/MeetTheOwners';
-import GoogleReview from '@/components/GoogleReview';
-import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import { Button } from '@/components/ui/button';
+
+// Lazy-load below-the-fold sections (loaded as user scrolls down)
+const HorseRidingSection = lazy(() => import('@/components/HorseRidingSection'));
+const ServicesSection = lazy(() => import('@/components/ServicesSection'));
+const HorseGallery = lazy(() => import('@/components/HorseGallery'));
+const LocationSection = lazy(() => import('@/components/LocationSection'));
+const MeetTheOwners = lazy(() => import('@/components/MeetTheOwners'));
+const AvailableUnitsSection = lazy(() => import('@/components/AvailableUnitsSection'));
+const GoogleReview = lazy(() => import('@/components/GoogleReview'));
+const Footer = lazy(() => import('@/components/Footer'));
 
 function App() {
   return (
@@ -27,30 +29,32 @@ function App() {
       <div id="home" className="scroll-smooth">
         <Navigation />
         <HeroSection />
-        <HorseRidingSection />
-        <ServicesSection />
-        <HorseGallery />
-        <LocationSection
-          title="What A Rush Riding Stables is located in Playa Cangrejera El Salvador. Look for the yellow sign!"
-          mapUrl="https://maps.app.goo.gl/8DDUbCdor8oBKjEm7"
-          image="/images/added/sign.jpeg"
-        />
-        <MeetTheOwners />
-        <div className="py-8 text-center bg-gradient-to-b from-amber-50 to-amber-100">
-          <Button
-            onClick={() => window.open('https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested', '_blank')}
-            className="bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold py-4 px-12 rounded-full text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
-          >
-            Contact for Booking
-          </Button>
-        </div>
-        <AvailableUnitsSection />
-        <LocationSection
-          title="House of Grace is a living community in El Salvador."
-          mapUrl="https://maps.app.goo.gl/hLYVpeWB1gF2EEqm9"
-        />
-        <GoogleReview />
-        <Footer />
+        <Suspense fallback={null}>
+          <HorseRidingSection />
+          <ServicesSection />
+          <HorseGallery />
+          <LocationSection
+            title="What A Rush Riding Stables is located in Playa Cangrejera El Salvador. Look for the yellow sign!"
+            mapUrl="https://maps.app.goo.gl/8DDUbCdor8oBKjEm7"
+            image="/images/location/sign.jpeg"
+          />
+          <MeetTheOwners />
+          <div className="py-8 text-center bg-gradient-to-b from-amber-50 to-amber-100">
+            <Button
+              onClick={() => window.open('https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested', '_blank')}
+              className="bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold py-4 px-12 rounded-full text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
+            >
+              Contact for Booking
+            </Button>
+          </div>
+          <AvailableUnitsSection />
+          <LocationSection
+            title="House of Grace is a living community in El Salvador."
+            mapUrl="https://maps.app.goo.gl/hLYVpeWB1gF2EEqm9"
+          />
+          <GoogleReview />
+          <Footer />
+        </Suspense>
         <Toaster />
       </div>
     </>

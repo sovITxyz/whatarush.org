@@ -62,6 +62,7 @@ const PropertyGallery = () => {
                 <img
                   src={image.src}
                   alt={`${image.label} at House of Grace beachfront property`}
+                  loading="lazy"
                   className={`w-full h-full object-cover transition-transform duration-500 ${
                     hoveredIndex === index ? 'scale-110' : 'scale-100'
                   }`}

@@ -2,8 +2,8 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Play, X, Camera, Video } from 'lucide-react';
 
-const basePath = '/images/added';
-const basePath2 = '/images/added2';
+const galleryPhotos = '/images/gallery/photos';
+const galleryVideos = '/images/gallery/videos';
 
 function shuffle(arr) {
   const a = [...arr];
@@ -32,81 +32,83 @@ function buildGallery(items) {
   return result;
 }
 
+const p = galleryPhotos;
 const photos = buildGallery([
-  { src: `${basePath}/Carbonero.jpeg` },
-  { src: `${basePath2}/carb.jpeg` },
-  { src: `${basePath}/Congrejeto1.jpeg` },
-  { src: `${basePath}/Congrejeto2.jpeg` },
-  { src: `${basePath}/Congrejeto3.jpeg` },
-  { src: `${basePath2}/con.jpeg` },
-  { src: `${basePath}/view.jpeg` },
-  { src: `${basePath}/paco2.jpeg` },
-  { src: `${basePath}/paco3.jpeg` },
-  { src: `${basePath}/view1.jpeg` },
-  { src: `${basePath}/Tequilla.jpeg` },
-  { src: `${basePath}/Tequilla2.jpeg` },
-  { src: `${basePath2}/tiq.jpeg` },
-  { src: `${basePath2}/tiqwthall.jpeg` },
-  { src: `${basePath}/view2.jpeg` },
-  { src: `${basePath}/Victorioso.jpeg` },
-  { src: `${basePath}/Victorioso2.jpeg` },
-  { src: `${basePath2}/vic.jpeg` },
-  { src: `${basePath2}/all.jpeg` },
-  { src: `${basePath2}/all2.jpeg` },
-  { src: `${basePath}/riding3 view.jpeg` },
-  { src: `${basePath}/view3.jpeg` },
-  { src: `${basePath}/riding1.jpeg` },
-  { src: `${basePath}/riding2.jpeg` },
-  { src: `${basePath2}/riding1.jpeg` },
-  { src: `${basePath2}/riding2.jpeg` },
-  { src: `${basePath}/riding6.jpeg` },
-  { src: `${basePath}/riding4 view.jpeg` },
-  { src: `${basePath}/riding7.jpeg` },
-  { src: `${basePath}/riding8.jpeg` },
-  { src: `${basePath}/riding11.jpeg` },
-  { src: `${basePath}/view4.jpeg` },
-  { src: `${basePath}/riding14.jpeg` },
-  { src: `${basePath}/riding16.jpeg` },
-  { src: `${basePath}/riding17.jpeg` },
-  { src: `${basePath}/riding5 view.jpeg` },
-  { src: `${basePath}/riding18.jpeg` },
-  { src: `${basePath}/riding19.jpeg` },
-  { src: `${basePath}/riding20.jpeg` },
-  { src: `${basePath}/view5.jpeg` },
-  { src: `${basePath}/riding21.jpeg` },
-  { src: `${basePath}/riding22.jpeg` },
-  { src: `${basePath}/riding23.jpeg` },
-  { src: `${basePath}/view6.jpeg` },
-  { src: `${basePath}/riding24.jpeg` },
-  { src: `${basePath}/riding25.jpeg` },
-  { src: `${basePath}/riding26.jpeg` },
-  { src: `${basePath}/view7.jpeg` },
-  { src: `${basePath}/riding27.jpeg` },
-  { src: `${basePath}/tack.jpeg` },
-  { src: `${basePath}/tack1.jpeg` },
-  { src: `${basePath}/view8.jpeg` },
-  { src: `${basePath}/tack2.jpeg` },
-  { src: `${basePath}/tack3.jpeg` },
-  { src: `${basePath}/tack4.jpeg` },
-  { src: `${basePath}/view9.jpeg` },
-  { src: `${basePath}/tack5.jpeg` },
-  { src: `${basePath}/tack7.jpeg` },
+  { src: `${p}/Carbonero.jpeg` },
+  { src: `${p}/carb.jpeg` },
+  { src: `${p}/Congrejeto1.jpeg` },
+  { src: `${p}/Congrejeto2.jpeg` },
+  { src: `${p}/Congrejeto3.jpeg` },
+  { src: `${p}/con.jpeg` },
+  { src: `${p}/view.jpeg` },
+  { src: `${p}/paco2.jpeg` },
+  { src: `${p}/paco3.jpeg` },
+  { src: `${p}/view1.jpeg` },
+  { src: `${p}/Tequilla.jpeg` },
+  { src: `${p}/Tequilla2.jpeg` },
+  { src: `${p}/tiq.jpeg` },
+  { src: `${p}/tiqwthall.jpeg` },
+  { src: `${p}/view2.jpeg` },
+  { src: `${p}/Victorioso.jpeg` },
+  { src: `${p}/Victorioso2.jpeg` },
+  { src: `${p}/vic.jpeg` },
+  { src: `${p}/all.jpeg` },
+  { src: `${p}/all2.jpeg` },
+  { src: `${p}/riding3 view.jpeg` },
+  { src: `${p}/view3.jpeg` },
+  { src: `${p}/riding1.jpeg` },
+  { src: `${p}/riding2.jpeg` },
+  { src: `${p}/riding1-b.jpeg` },
+  { src: `${p}/riding2-b.jpeg` },
+  { src: `${p}/riding6.jpeg` },
+  { src: `${p}/riding4 view.jpeg` },
+  { src: `${p}/riding7.jpeg` },
+  { src: `${p}/riding8.jpeg` },
+  { src: `${p}/riding11.jpeg` },
+  { src: `${p}/view4.jpeg` },
+  { src: `${p}/riding14.jpeg` },
+  { src: `${p}/riding16.jpeg` },
+  { src: `${p}/riding17.jpeg` },
+  { src: `${p}/riding5 view.jpeg` },
+  { src: `${p}/riding18.jpeg` },
+  { src: `${p}/riding19.jpeg` },
+  { src: `${p}/riding20.jpeg` },
+  { src: `${p}/view5.jpeg` },
+  { src: `${p}/riding21.jpeg` },
+  { src: `${p}/riding22.jpeg` },
+  { src: `${p}/riding23.jpeg` },
+  { src: `${p}/view6.jpeg` },
+  { src: `${p}/riding24.jpeg` },
+  { src: `${p}/riding25.jpeg` },
+  { src: `${p}/riding26.jpeg` },
+  { src: `${p}/view7.jpeg` },
+  { src: `${p}/riding27.jpeg` },
+  { src: `${p}/tack.jpeg` },
+  { src: `${p}/tack1.jpeg` },
+  { src: `${p}/view8.jpeg` },
+  { src: `${p}/tack2.jpeg` },
+  { src: `${p}/tack3.jpeg` },
+  { src: `${p}/tack4.jpeg` },
+  { src: `${p}/view9.jpeg` },
+  { src: `${p}/tack5.jpeg` },
+  { src: `${p}/tack7.jpeg` },
 ]);
 
+const v = galleryVideos;
 const videos = [
-  { src: `${basePath}/beachride.mov` },
-  { src: `${basePath}/video1.mov` },
-  { src: `${basePath}/video2.MP4` },
-  { src: `${basePath}/video3.mp4` },
-  { src: `${basePath2}/ridingvideo1.mp4` },
-  { src: `${basePath2}/ridingvideo2.mp4` },
-  { src: `${basePath2}/ridingvideo3.mp4` },
-  { src: `${basePath2}/ridingvideo4.mp4` },
-  { src: `${basePath2}/ridingvideo5.mp4` },
-  { src: `${basePath2}/ridingvideo6.mp4` },
-  { src: `${basePath2}/ridingvideo7.mp4` },
-  { src: `${basePath}/shakey-video1.MP4` },
-  { src: `${basePath}/shakey-video2.mp4` },
+  { src: `${v}/beachride.mp4` },
+  { src: `${v}/video1.mov` },
+  { src: `${v}/video2.MP4` },
+  { src: `${v}/video3.mp4` },
+  { src: `${v}/ridingvideo1.mp4` },
+  { src: `${v}/ridingvideo2.mp4` },
+  { src: `${v}/ridingvideo3.mp4` },
+  { src: `${v}/ridingvideo4.mp4` },
+  { src: `${v}/ridingvideo5.mp4` },
+  { src: `${v}/ridingvideo6.mp4` },
+  { src: `${v}/ridingvideo7.mp4` },
+  { src: `${v}/shakey-video1.MP4` },
+  { src: `${v}/shakey-video2.mp4` },
 ];
 
 const GalleryCarousel = ({ items, type }) => {
@@ -229,6 +231,7 @@ const GalleryCarousel = ({ items, type }) => {
                   src={item.src}
                   controls
                   playsInline
+                  preload="none"
                   autoPlay={isVisible}
                   onEnded={goNext}
                   className="w-full h-full object-contain"
@@ -283,7 +286,7 @@ const GalleryCarousel = ({ items, type }) => {
                 <Play className="w-4 h-4 md:w-5 md:h-5 text-white" />
               </div>
             ) : (
-              <img src={m.src} alt="" className="w-full h-full object-cover" />
+              <img src={m.src} alt="" loading="lazy" className="w-full h-full object-cover" />
             )}
           </button>
         ))}

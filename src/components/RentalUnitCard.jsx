@@ -15,7 +15,7 @@ const RentalUnitCard = () => {
     { icon: Home, text: 'Fully Furnished', color: 'text-amber-600' },
     { icon: DollarSign, text: 'American Standard', color: 'text-green-600' },
     { icon: Wifi, text: 'Starlink Internet Included', color: 'text-indigo-600' },
-    { icon: Zap, text: 'Electricity Extra', color: 'text-yellow-600' },
+    { icon: Zap, text: 'All Utilities Included', color: 'text-yellow-600', note: 'short' },
   ];
 
   const pricing = [
@@ -100,6 +100,18 @@ const RentalUnitCard = () => {
             <span>{feature.text}</span>
           </motion.div>
         ))}
+      </div>
+
+      {/* Electricity note */}
+      <div className="mb-8 bg-amber-50 border border-amber-200 rounded-lg p-4">
+        <div className="flex items-start gap-2">
+          <Zap className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-gray-600">
+            <span className="font-semibold text-gray-700">Short-term stays</span> — electricity included in nightly &amp; weekly rates.
+            <br />
+            <span className="font-semibold text-gray-700">Long-term lease</span> — electricity billed separately based on usage.
+          </p>
+        </div>
       </div>
 
       <div className="border-t pt-6 mb-6">

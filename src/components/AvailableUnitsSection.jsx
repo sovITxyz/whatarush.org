@@ -67,9 +67,10 @@ const AvailableUnitsSection = () => {
               <div className="w-full h-full flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
                 <video
                   ref={videoRef}
-                  src="/images/added2/palaparental.mp4"
+                  src="/images/property-video/palaparental.mp4"
                   controls
                   playsInline
+                  preload="none"
                   autoPlay
                   onEnded={() => setShowVideo(false)}
                   className="max-w-full max-h-full object-contain"

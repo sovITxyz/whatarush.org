@@ -28,8 +28,9 @@ const MeetTheOwners = () => {
             className="rounded-2xl overflow-hidden shadow-xl"
           >
             <img
-              src="/images/added/shawn&Darcy.jpeg"
+              src="/images/owners/shawn&Darcy.jpeg"
               alt="Shawn and D'Arcy"
+              loading="lazy"
               className="w-full h-[464px] object-cover object-top"
             />
           </motion.div>
@@ -42,8 +43,9 @@ const MeetTheOwners = () => {
             className="rounded-2xl overflow-hidden shadow-xl"
           >
             <img
-              src="/images/added2/cowboyandcowgirl.jpeg"
+              src="/images/owners/cowboyandcowgirl.jpeg"
               alt="Shawn and D'Arcy — Cowboy and Cowgirl"
+              loading="lazy"
               className="w-full h-[464px] object-cover"
             />
           </motion.div>
