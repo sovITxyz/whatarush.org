@@ -122,6 +122,23 @@ const GalleryCarousel = ({ items, type }) => {
   const mainVideoRef = useRef(null);
   const touchStartX = useRef(null);
   const sectionRef = useRef(null);
+  const slideDelayRef = useRef(10000);
+
+  // Preload all media so navigation is instant
+  useEffect(() => {
+    items.forEach((item) => {
+      if (type === 'image') {
+        const img = new Image();
+        img.src = item.src;
+      } else {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'video';
+        link.href = item.src;
+        document.head.appendChild(link);
+      }
+    });
+  }, [items, type]);
 
   // Track visibility with IntersectionObserver
   useEffect(() => {
@@ -159,15 +176,18 @@ const GalleryCarousel = ({ items, type }) => {
     }
   }, [current]);
 
-  // Auto-slideshow for photos only, disabled in fullscreen or when not visible
+  // Auto-slideshow for photos only, disabled in fullscreen or when not visible.
+  // Default 10s interval; resets to 20s after manual navigation.
   useEffect(() => {
     if (type !== 'image' || fullscreen || !isVisible) return;
+    const delay = slideDelayRef.current;
     const timer = setInterval(() => {
+      slideDelayRef.current = 10000;
       setDirection(1);
       setCurrent((prev) => (prev === items.length - 1 ? 0 : prev + 1));
-    }, 8000);
+    }, delay);
     return () => clearInterval(timer);
-  }, [type, fullscreen, isVisible, items.length]);
+  }, [type, fullscreen, isVisible, items.length, current]);
 
   const openFullscreen = useCallback(() => {
     if (mainVideoRef.current) mainVideoRef.current.pause();
@@ -175,16 +195,19 @@ const GalleryCarousel = ({ items, type }) => {
   }, []);
 
   const goTo = useCallback((index) => {
+    slideDelayRef.current = 20000;
     setDirection(index > current ? 1 : -1);
     setCurrent(index);
   }, [current]);
 
   const goPrev = useCallback(() => {
+    slideDelayRef.current = 20000;
     setDirection(-1);
     setCurrent((prev) => (prev === 0 ? items.length - 1 : prev - 1));
   }, [items.length]);
 
   const goNext = useCallback(() => {
+    slideDelayRef.current = 20000;
     setDirection(1);
     setCurrent((prev) => (prev === items.length - 1 ? 0 : prev + 1));
   }, [items.length]);
@@ -286,7 +309,7 @@ const GalleryCarousel = ({ items, type }) => {
                 <Play className="w-4 h-4 md:w-5 md:h-5 text-white" />
               </div>
             ) : (
-              <img src={m.src} alt="" loading="lazy" className="w-full h-full object-cover" />
+              <img src={m.src} alt="" className="w-full h-full object-cover" />
             )}
           </button>
         ))}
