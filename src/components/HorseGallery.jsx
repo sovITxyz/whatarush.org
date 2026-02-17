@@ -113,11 +113,32 @@ const GalleryCarousel = ({ items, type }) => {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const thumbsRef = useRef(null);
   const thumbRefs = useRef([]);
   const isFirstRender = useRef(true);
   const mainVideoRef = useRef(null);
   const touchStartX = useRef(null);
+  const sectionRef = useRef(null);
+
+  // Track visibility with IntersectionObserver
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Pause video when scrolled away
+  useEffect(() => {
+    if (!isVisible && mainVideoRef.current && type === 'video') {
+      mainVideoRef.current.pause();
+    }
+  }, [isVisible, type]);
 
   useEffect(() => {
     setCurrent(0);
@@ -136,15 +157,15 @@ const GalleryCarousel = ({ items, type }) => {
     }
   }, [current]);
 
-  // Auto-slideshow for photos only, disabled in fullscreen
+  // Auto-slideshow for photos only, disabled in fullscreen or when not visible
   useEffect(() => {
-    if (type !== 'image' || fullscreen) return;
+    if (type !== 'image' || fullscreen || !isVisible) return;
     const timer = setInterval(() => {
       setDirection(1);
       setCurrent((prev) => (prev === items.length - 1 ? 0 : prev + 1));
     }, 8000);
     return () => clearInterval(timer);
-  }, [type, fullscreen, items.length]);
+  }, [type, fullscreen, isVisible, items.length]);
 
   const openFullscreen = useCallback(() => {
     if (mainVideoRef.current) mainVideoRef.current.pause();
@@ -183,7 +204,7 @@ const GalleryCarousel = ({ items, type }) => {
   const item = items[current];
 
   return (
-    <>
+    <div ref={sectionRef}>
       {/* Slideshow */}
       <div
         className="relative"
@@ -208,7 +229,7 @@ const GalleryCarousel = ({ items, type }) => {
                   src={item.src}
                   controls
                   playsInline
-                  autoPlay
+                  autoPlay={isVisible}
                   onEnded={goNext}
                   className="w-full h-full object-contain"
                 />
@@ -313,7 +334,7 @@ const GalleryCarousel = ({ items, type }) => {
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
