@@ -136,6 +136,16 @@ const GalleryCarousel = ({ items, type }) => {
     }
   }, [current]);
 
+  // Auto-slideshow for photos only, disabled in fullscreen
+  useEffect(() => {
+    if (type !== 'image' || fullscreen) return;
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrent((prev) => (prev === items.length - 1 ? 0 : prev + 1));
+    }, 8000);
+    return () => clearInterval(timer);
+  }, [type, fullscreen, items.length]);
+
   const openFullscreen = useCallback(() => {
     if (mainVideoRef.current) mainVideoRef.current.pause();
     setFullscreen(true);
@@ -198,6 +208,8 @@ const GalleryCarousel = ({ items, type }) => {
                   src={item.src}
                   controls
                   playsInline
+                  autoPlay
+                  onEnded={goNext}
                   className="w-full h-full object-contain"
                 />
               ) : (
