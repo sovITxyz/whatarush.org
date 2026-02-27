@@ -39,11 +39,9 @@ const services = [
   },
 ];
 
-const ServicesSection = () => {
-  const handleContact = () => {
-    window.open('https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested%20in%20your%20services', '_blank');
-  };
+const whatsappUrl = 'https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested%20in%20your%20services';
 
+const ServicesSection = () => {
   return (
     <section id="services" className="py-16 px-4 bg-gradient-to-b from-amber-100 via-orange-50 to-amber-50">
       <div className="max-w-7xl mx-auto">
@@ -99,10 +97,12 @@ const ServicesSection = () => {
                   </div>
 
                   <Button
-                    onClick={handleContact}
+                    asChild
                     className={`w-full bg-gradient-to-r ${service.color} text-white font-semibold py-2 rounded-lg transition-all duration-300 transform hover:scale-105`}
                   >
-                    Contact Us
+                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                      Contact Us
+                    </a>
                   </Button>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { toWebP } from '@/lib/utils';
 
 const HorseCard = ({ name, images, imgTick, story, index, onLearnMore }) => {
   const currentIndex = imgTick % images.length;
@@ -17,16 +18,21 @@ const HorseCard = ({ name, images, imgTick, story, index, onLearnMore }) => {
         {/* Image with crossfade */}
         <div className="relative overflow-hidden h-[300px]">
           <AnimatePresence mode="wait">
-            <motion.img
+            <motion.picture
               key={currentIndex}
-              src={images[currentIndex]}
-              alt={`${name} - Beautiful horse at What A Rush Riding Stables`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.8, ease: 'easeInOut' }}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+              className="absolute inset-0 w-full h-full"
+            >
+              <source srcSet={toWebP(images[currentIndex])} type="image/webp" />
+              <img
+                src={images[currentIndex]}
+                alt={`${name} - Beautiful horse at What A Rush Riding Stables`}
+                className="w-full h-full object-cover"
+              />
+            </motion.picture>
           </AnimatePresence>
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
@@ -44,7 +50,7 @@ const HorseCard = ({ name, images, imgTick, story, index, onLearnMore }) => {
             onClick={onLearnMore}
             className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold py-2 rounded-lg transition-all duration-300 transform hover:scale-105"
           >
-            Learn More
+            Meet {name}
           </Button>
         </div>
       </div>

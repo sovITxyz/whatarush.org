@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Play, X, Camera, Video } from 'lucide-react';
+import { toWebP } from '@/lib/utils';
 
 const galleryPhotos = '/images/gallery/photos';
 const galleryVideos = '/images/gallery/videos';
@@ -34,64 +35,64 @@ function buildGallery(items) {
 
 const p = galleryPhotos;
 const photos = buildGallery([
-  { src: `${p}/Carbonero.jpeg` },
-  { src: `${p}/carb.jpeg` },
-  { src: `${p}/Congrejeto1.jpeg` },
-  { src: `${p}/Congrejeto2.jpeg` },
-  { src: `${p}/Congrejeto3.jpeg` },
-  { src: `${p}/con.jpeg` },
-  { src: `${p}/view.jpeg` },
-  { src: `${p}/paco2.jpeg` },
-  { src: `${p}/paco3.jpeg` },
-  { src: `${p}/view1.jpeg` },
-  { src: `${p}/Tequilla.jpeg` },
-  { src: `${p}/Tequilla2.jpeg` },
-  { src: `${p}/tiq.jpeg` },
-  { src: `${p}/tiqwthall.jpeg` },
-  { src: `${p}/view2.jpeg` },
-  { src: `${p}/Victorioso.jpeg` },
-  { src: `${p}/Victorioso2.jpeg` },
-  { src: `${p}/vic.jpeg` },
-  { src: `${p}/all.jpeg` },
-  { src: `${p}/all2.jpeg` },
-  { src: `${p}/riding3 view.jpeg` },
-  { src: `${p}/view3.jpeg` },
-  { src: `${p}/riding1.jpeg` },
-  { src: `${p}/riding2.jpeg` },
-  { src: `${p}/riding1-b.jpeg` },
-  { src: `${p}/riding2-b.jpeg` },
-  { src: `${p}/riding6.jpeg` },
-  { src: `${p}/riding4 view.jpeg` },
-  { src: `${p}/riding7.jpeg` },
-  { src: `${p}/riding8.jpeg` },
-  { src: `${p}/riding11.jpeg` },
-  { src: `${p}/view4.jpeg` },
-  { src: `${p}/riding14.jpeg` },
-  { src: `${p}/riding16.jpeg` },
-  { src: `${p}/riding17.jpeg` },
-  { src: `${p}/riding5 view.jpeg` },
-  { src: `${p}/riding18.jpeg` },
-  { src: `${p}/riding19.jpeg` },
-  { src: `${p}/riding20.jpeg` },
-  { src: `${p}/view5.jpeg` },
-  { src: `${p}/riding21.jpeg` },
-  { src: `${p}/riding22.jpeg` },
-  { src: `${p}/riding23.jpeg` },
-  { src: `${p}/view6.jpeg` },
-  { src: `${p}/riding24.jpeg` },
-  { src: `${p}/riding25.jpeg` },
-  { src: `${p}/riding26.jpeg` },
-  { src: `${p}/view7.jpeg` },
-  { src: `${p}/riding27.jpeg` },
-  { src: `${p}/tack.jpeg` },
-  { src: `${p}/tack1.jpeg` },
-  { src: `${p}/view8.jpeg` },
-  { src: `${p}/tack2.jpeg` },
-  { src: `${p}/tack3.jpeg` },
-  { src: `${p}/tack4.jpeg` },
-  { src: `${p}/view9.jpeg` },
-  { src: `${p}/tack5.jpeg` },
-  { src: `${p}/tack7.jpeg` },
+  { src: `${p}/Carbonero.jpeg`, alt: 'Carbonero the horse at What A Rush Riding Stables' },
+  { src: `${p}/carb.jpeg`, alt: 'Carbonero the horse' },
+  { src: `${p}/Congrejeto1.jpeg`, alt: 'Congrejeto the Friesian horse' },
+  { src: `${p}/Congrejeto2.jpeg`, alt: 'Congrejeto the Friesian horse posing' },
+  { src: `${p}/Congrejeto3.jpeg`, alt: 'Congrejeto the Friesian horse close-up' },
+  { src: `${p}/con.jpeg`, alt: 'Congrejeto the horse' },
+  { src: `${p}/view.jpeg`, alt: 'Scenic beach view in La Libertad, El Salvador' },
+  { src: `${p}/paco2.jpeg`, alt: 'Paco the Peruvian horse' },
+  { src: `${p}/paco3.jpeg`, alt: 'Paco the Peruvian horse close-up' },
+  { src: `${p}/view1.jpeg`, alt: 'Beach and ocean view from the riding trail' },
+  { src: `${p}/Tequilla.jpeg`, alt: 'Tequilla the Spanish gaited horse' },
+  { src: `${p}/Tequilla2.jpeg`, alt: 'Tequilla the horse with flowing mane' },
+  { src: `${p}/tiq.jpeg`, alt: 'Tequilla the horse' },
+  { src: `${p}/tiqwthall.jpeg`, alt: 'Tequilla with the riding group' },
+  { src: `${p}/view2.jpeg`, alt: 'Scenic estuary view along the riding trail' },
+  { src: `${p}/Victorioso.jpeg`, alt: 'Victorioso the horse in motion' },
+  { src: `${p}/Victorioso2.jpeg`, alt: 'Victorioso the horse portrait' },
+  { src: `${p}/vic.jpeg`, alt: 'Victorioso the horse' },
+  { src: `${p}/all.jpeg`, alt: 'All the horses together at What A Rush stables' },
+  { src: `${p}/all2.jpeg`, alt: 'Group photo of the horses at the stables' },
+  { src: `${p}/riding3 view.jpeg`, alt: 'Horseback riding with a scenic view' },
+  { src: `${p}/view3.jpeg`, alt: 'Sunset view from the beachfront trail' },
+  { src: `${p}/riding1.jpeg`, alt: 'Beachfront horseback riding at What A Rush' },
+  { src: `${p}/riding2.jpeg`, alt: 'Riders enjoying a guided trail ride' },
+  { src: `${p}/riding1-b.jpeg`, alt: 'Horseback riding on the beach' },
+  { src: `${p}/riding2-b.jpeg`, alt: 'Trail riding through the sugar cane fields' },
+  { src: `${p}/riding6.jpeg`, alt: 'Guided horseback ride along the shore' },
+  { src: `${p}/riding4 view.jpeg`, alt: 'Horseback riding with ocean view' },
+  { src: `${p}/riding7.jpeg`, alt: 'Riders on a wooded trail ride' },
+  { src: `${p}/riding8.jpeg`, alt: 'Horseback riding through the estuary' },
+  { src: `${p}/riding11.jpeg`, alt: 'Group horseback ride on the beach' },
+  { src: `${p}/view4.jpeg`, alt: 'Panoramic view of the El Salvador coastline' },
+  { src: `${p}/riding14.jpeg`, alt: 'Rider and horse on the beachfront' },
+  { src: `${p}/riding16.jpeg`, alt: 'Guided ride through scenic sugar cane fields' },
+  { src: `${p}/riding17.jpeg`, alt: 'Horseback riding adventure in El Salvador' },
+  { src: `${p}/riding5 view.jpeg`, alt: 'Riding with a view of the ocean' },
+  { src: `${p}/riding18.jpeg`, alt: 'Trail ride along the beach' },
+  { src: `${p}/riding19.jpeg`, alt: 'Beachfront riding at sunset' },
+  { src: `${p}/riding20.jpeg`, alt: 'Horseback riding in La Libertad' },
+  { src: `${p}/view5.jpeg`, alt: 'Beautiful beach view in La Libertad' },
+  { src: `${p}/riding21.jpeg`, alt: 'Guided trail ride through wooded paths' },
+  { src: `${p}/riding22.jpeg`, alt: 'Rider enjoying the scenic trail' },
+  { src: `${p}/riding23.jpeg`, alt: 'Horseback ride along the El Salvador coast' },
+  { src: `${p}/view6.jpeg`, alt: 'Coastal landscape view from the trail' },
+  { src: `${p}/riding24.jpeg`, alt: 'Riding through the beachfront trail' },
+  { src: `${p}/riding25.jpeg`, alt: 'Guided horseback riding experience' },
+  { src: `${p}/riding26.jpeg`, alt: 'Beach horseback riding adventure' },
+  { src: `${p}/view7.jpeg`, alt: 'Ocean view from the riding stables' },
+  { src: `${p}/riding27.jpeg`, alt: 'Trail ride at What A Rush Riding Stables' },
+  { src: `${p}/tack.jpeg`, alt: 'Horse riding saddle and tack' },
+  { src: `${p}/tack1.jpeg`, alt: 'Horse bridle and riding equipment' },
+  { src: `${p}/view8.jpeg`, alt: 'Scenic view of the beach and estuary' },
+  { src: `${p}/tack2.jpeg`, alt: 'Saddle and riding gear ready for the trail' },
+  { src: `${p}/tack3.jpeg`, alt: 'Horse tack and equipment at the stables' },
+  { src: `${p}/tack4.jpeg`, alt: 'Riding equipment display at What A Rush' },
+  { src: `${p}/view9.jpeg`, alt: 'Sunset over the La Libertad beach' },
+  { src: `${p}/tack5.jpeg`, alt: 'Horse riding gear and accessories' },
+  { src: `${p}/tack7.jpeg`, alt: 'Saddle and tack at the riding stables' },
 ]);
 
 const v = galleryVideos;
@@ -260,12 +261,15 @@ const GalleryCarousel = ({ items, type }) => {
                   className="w-full h-full object-contain"
                 />
               ) : (
-                <img
-                  src={item.src}
-                  alt=""
-                  onClick={openFullscreen}
-                  className="w-full h-full object-contain cursor-pointer"
-                />
+                <picture>
+                  <source srcSet={toWebP(item.src)} type="image/webp" />
+                  <img
+                    src={item.src}
+                    alt={item.alt || 'Gallery photo at What A Rush Riding Stables'}
+                    onClick={openFullscreen}
+                    className="w-full h-full object-contain cursor-pointer"
+                  />
+                </picture>
               )}
             </motion.div>
           </AnimatePresence>
@@ -294,12 +298,15 @@ const GalleryCarousel = ({ items, type }) => {
       </div>
 
       {/* Thumbnail strip */}
-      <div ref={thumbsRef} className="mt-4 flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
+      <div ref={thumbsRef} className="mt-4 flex gap-2 overflow-x-auto pb-2 scrollbar-thin" role="tablist" aria-label="Gallery thumbnails">
         {items.map((m, i) => (
           <button
             key={i}
             ref={(el) => { thumbRefs.current[i] = el; }}
             onClick={() => goTo(i)}
+            role="tab"
+            aria-selected={i === current}
+            aria-label={type === 'video' ? `Play video ${i + 1} of ${items.length}` : `View photo ${i + 1} of ${items.length}`}
             className={`flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden border-2 transition-all ${
               i === current ? 'border-amber-500 scale-105 shadow-md' : 'border-transparent opacity-60 hover:opacity-100'
             }`}
@@ -309,7 +316,10 @@ const GalleryCarousel = ({ items, type }) => {
                 <Play className="w-4 h-4 md:w-5 md:h-5 text-white" />
               </div>
             ) : (
-              <img src={m.src} alt="" className="w-full h-full object-cover" />
+              <picture>
+                <source srcSet={toWebP(m.src)} type="image/webp" />
+                <img src={m.src} alt="" loading={i < 4 ? undefined : 'lazy'} className="w-full h-full object-cover" />
+              </picture>
             )}
           </button>
         ))}
@@ -336,12 +346,15 @@ const GalleryCarousel = ({ items, type }) => {
           </p>
 
           <div className="w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={item.src}
-              alt=""
-              className="max-w-full max-h-full object-contain cursor-pointer"
-              onClick={() => setFullscreen(false)}
-            />
+            <picture>
+              <source srcSet={toWebP(item.src)} type="image/webp" />
+              <img
+                src={item.src}
+                alt={item.alt || 'Gallery photo at What A Rush Riding Stables'}
+                className="max-w-full max-h-full object-contain cursor-pointer"
+                onClick={() => setFullscreen(false)}
+              />
+            </picture>
           </div>
 
           <button
@@ -386,8 +399,11 @@ const HorseGallery = () => {
         </motion.div>
 
         {/* Tabs */}
-        <div className="flex justify-center gap-4 mb-8">
+        <div className="flex justify-center gap-4 mb-8" role="tablist" aria-label="Gallery media type">
           <button
+            role="tab"
+            aria-selected={tab === 'photos'}
+            aria-controls="gallery-photos"
             onClick={() => setTab('photos')}
             className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-lg transition-all duration-300 ${
               tab === 'photos'
@@ -399,6 +415,9 @@ const HorseGallery = () => {
             Photos
           </button>
           <button
+            role="tab"
+            aria-selected={tab === 'videos'}
+            aria-controls="gallery-videos"
             onClick={() => setTab('videos')}
             className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-lg transition-all duration-300 ${
               tab === 'videos'
@@ -412,9 +431,13 @@ const HorseGallery = () => {
         </div>
 
         {tab === 'photos' ? (
-          <GalleryCarousel items={photos} type="image" />
+          <div id="gallery-photos" role="tabpanel" aria-label="Photo gallery">
+            <GalleryCarousel items={photos} type="image" />
+          </div>
         ) : (
-          <GalleryCarousel items={videos} type="video" />
+          <div id="gallery-videos" role="tabpanel" aria-label="Video gallery">
+            <GalleryCarousel items={videos} type="video" />
+          </div>
         )}
       </div>
     </section>

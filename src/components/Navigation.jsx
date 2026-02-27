@@ -22,10 +22,12 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (e, sectionId) => {
+    e.preventDefault();
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
+      window.history.replaceState(null, '', `#${sectionId}`);
       setIsMobileMenuOpen(false);
     }
   };
@@ -53,26 +55,28 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <button
-            onClick={() => scrollToSection('home')}
+          <a
+            href="#home"
+            onClick={(e) => scrollToSection(e, 'home')}
             className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent hover:from-amber-700 hover:to-orange-700 transition-all duration-300"
           >
             House of Grace
-          </button>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <button
+              <a
                 key={link.name}
-                onClick={() => scrollToSection(link.sectionId)}
+                href={`#${link.sectionId}`}
+                onClick={(e) => scrollToSection(e, link.sectionId)}
                 className="flex items-center gap-2 font-medium transition-all duration-300 group"
               >
                 <link.icon className="w-5 h-5 text-amber-600 group-hover:text-amber-700" />
                 <span className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent group-hover:from-amber-700 group-hover:to-orange-700">
                   {link.name}
                 </span>
-              </button>
+              </a>
             ))}
             
             <Button
@@ -112,16 +116,17 @@ const Navigation = () => {
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <button
+                <a
                   key={link.name}
-                  onClick={() => scrollToSection(link.sectionId)}
+                  href={`#${link.sectionId}`}
+                  onClick={(e) => scrollToSection(e, link.sectionId)}
                   className="flex items-center gap-2 font-medium transition-all py-2 group"
                 >
                   <link.icon className="w-5 h-5 text-amber-600 group-hover:text-amber-700" />
                   <span className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent group-hover:from-amber-700 group-hover:to-orange-700">
                     {link.name}
                   </span>
-                </button>
+                </a>
               ))}
               
               <Button
