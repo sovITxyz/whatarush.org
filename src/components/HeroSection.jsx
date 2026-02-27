@@ -13,12 +13,16 @@ const HeroSection = () => {
   return (
     <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(/images/hero-background.jpg)',
-        }}
-      >
+      <div className="absolute inset-0 w-full h-full">
+        <picture>
+          <source srcSet="/images/hero-background.webp" type="image/webp" />
+          <img
+            src="/images/hero-background.jpg"
+            alt=""
+            className="w-full h-full object-cover object-center"
+            fetchPriority="high"
+          />
+        </picture>
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
       </div>

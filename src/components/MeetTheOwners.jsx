@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { toWebP } from '@/lib/utils';
 
 const MeetTheOwners = () => {
   return (
@@ -27,12 +28,15 @@ const MeetTheOwners = () => {
             transition={{ duration: 0.7 }}
             className="rounded-2xl overflow-hidden shadow-xl"
           >
-            <img
-              src="/images/owners/shawn&Darcy.jpeg"
-              alt="Shawn and D'Arcy"
-              loading="lazy"
-              className="w-full h-[464px] object-cover object-top"
-            />
+            <picture>
+              <source srcSet={toWebP("/images/owners/shawn&Darcy.jpeg")} type="image/webp" />
+              <img
+                src="/images/owners/shawn&Darcy.jpeg"
+                alt="Shawn and D'Arcy"
+                loading="lazy"
+                className="w-full h-[464px] object-cover object-top"
+              />
+            </picture>
           </motion.div>
 
           <motion.div
@@ -42,12 +46,15 @@ const MeetTheOwners = () => {
             transition={{ duration: 0.7 }}
             className="rounded-2xl overflow-hidden shadow-xl"
           >
-            <img
-              src="/images/owners/cowboyandcowgirl.jpeg"
-              alt="Shawn and D'Arcy — Cowboy and Cowgirl"
-              loading="lazy"
-              className="w-full h-[464px] object-cover"
-            />
+            <picture>
+              <source srcSet={toWebP("/images/owners/cowboyandcowgirl.jpeg")} type="image/webp" />
+              <img
+                src="/images/owners/cowboyandcowgirl.jpeg"
+                alt="Shawn and D'Arcy — Cowboy and Cowgirl"
+                loading="lazy"
+                className="w-full h-[464px] object-cover"
+              />
+            </picture>
           </motion.div>
         </div>
       </div>

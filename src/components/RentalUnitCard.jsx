@@ -3,11 +3,9 @@ import { motion } from 'framer-motion';
 import { Bed, Bath, MapPin, DollarSign, Wifi, Zap, Home, Bitcoin, Banknote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const RentalUnitCard = () => {
-  const handleContact = () => {
-    window.open('https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested%20in%20the%20Palapa%20Rental', '_blank');
-  };
+const whatsappUrl = 'https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested%20in%20the%20Palapa%20Rental';
 
+const RentalUnitCard = () => {
   const features = [
     { icon: Bed, text: '1 Bedroom', color: 'text-blue-600' },
     { icon: Bath, text: '1 Bathroom', color: 'text-cyan-600' },
@@ -120,10 +118,12 @@ const RentalUnitCard = () => {
       </div>
 
       <Button
-        onClick={handleContact}
+        asChild
         className="w-full bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-semibold py-3 rounded-lg transition-all duration-300 transform hover:scale-105"
       >
-        Contact for Details
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+          Contact for Details
+        </a>
       </Button>
     </motion.div>
   );

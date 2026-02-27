@@ -50,11 +50,13 @@ const GoogleReview = () => {
           className="text-center"
         >
           <Button
-            onClick={() => window.open(reviewUrl, '_blank')}
+            asChild
             className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-4 px-10 rounded-full text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
           >
-            <Star className="w-5 h-5 mr-2 fill-white" />
-            Write a Google Review
+            <a href={reviewUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center">
+              <Star className="w-5 h-5 mr-2 fill-white" />
+              Write a Google Review
+            </a>
           </Button>
         </motion.div>
       </div>

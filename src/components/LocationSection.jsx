@@ -2,8 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { toWebP } from '@/lib/utils';
 
-const LocationSection = ({ title, mapUrl, image }) => {
+const LocationSection = ({ title, mapUrl, image, imageAlt }) => {
   return (
     <section className="py-16 px-4 bg-gradient-to-b from-white to-amber-50/30">
       <div className={image ? "max-w-6xl mx-auto" : "max-w-4xl mx-auto"}>
@@ -39,12 +40,15 @@ const LocationSection = ({ title, mapUrl, image }) => {
 
             {image && (
               <div className="md:w-1/2">
-                <img
-                  src={image}
-                  alt="Location"
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
+                <picture>
+                  <source srcSet={toWebP(image)} type="image/webp" />
+                  <img
+                    src={image}
+                    alt={imageAlt || title}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                </picture>
               </div>
             )}
           </div>
