@@ -110,7 +110,7 @@ const Footer = () => {
           <p className="text-gray-500 text-sm mt-2">
             La Libertad, El Salvador - Where Adventure Meets Paradise
           </p>
-          <a href="https://sovit.xyz" target="_blank" rel="noopener noreferrer" className="block text-gray-600 text-xs mt-3 hover:text-teal-400 transition-colors">
+          <a href="https://www.sovit.xyz" target="_blank" rel="noopener noreferrer" className="block text-gray-600 text-xs mt-3 hover:text-teal-400 transition-colors">
             Website created by Cameron — sovit.xyz
           </a>
         </motion.div>
