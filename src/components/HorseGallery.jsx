@@ -15,11 +15,11 @@ function shuffle(arr) {
   return a;
 }
 
-// Spread view photos evenly throughout the shuffled gallery
+// Spread randomized view photos evenly throughout the gallery (non-views keep their order)
 function buildGallery(items) {
   const isView = (item) => item.src.toLowerCase().includes('view');
   const views = shuffle(items.filter(isView));
-  const others = shuffle(items.filter((item) => !isView(item)));
+  const others = items.filter((item) => !isView(item));
   const result = [];
   const interval = Math.max(1, Math.floor(others.length / (views.length + 1)));
   let vi = 0;
@@ -35,6 +35,7 @@ function buildGallery(items) {
 
 const p = galleryPhotos;
 const photos = buildGallery([
+  { src: `${p}/Tiqandpeople.jpeg`, alt: 'Tequilla with people at What A Rush Riding Stables' },
   { src: `${p}/Carbonero.jpeg`, alt: 'Carbonero the horse at What A Rush Riding Stables' },
   { src: `${p}/carb.jpeg`, alt: 'Carbonero the horse' },
   { src: `${p}/Congrejeto1.jpeg`, alt: 'Congrejeto the Friesian horse' },
