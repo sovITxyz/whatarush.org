@@ -1,6 +1,13 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Serve AI and SEO files directly (skip SPA routing)
+  RewriteRule ^llms\.txt$ - [L]
+  RewriteRule ^llms-full\.txt$ - [L]
+  RewriteRule ^robots\.txt$ - [L]
+  RewriteRule ^sitemap\.xml$ - [L]
+
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^ index.html [L]
@@ -11,9 +18,19 @@
 
   # Cache everything on CDN by default
   Header set Cache-Control "public, s-maxage=604800, max-age=0"
-  
+
   # Cache in browser all assets
   <If "%{REQUEST_URI} =~ m#^/assets/.*$#">
     Header set Cache-Control "public, max-age=604800"
   </If>
+</IfModule>
+
+# Correct MIME types for AI/SEO files
+<IfModule mod_mime.c>
+  <FilesMatch "\.txt$">
+    ForceType text/plain
+  </FilesMatch>
+  <FilesMatch "\.xml$">
+    ForceType application/xml
+  </FilesMatch>
 </IfModule>

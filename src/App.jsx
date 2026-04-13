@@ -18,14 +18,24 @@ const Footer = lazy(() => import('@/components/Footer'));
 const structuredData = [
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "WebSite",
     "name": "What A Rush Riding Stables",
-    "description": "Beachfront horseback riding, guided trail rides, horsemanship lessons, and horse therapy sessions in La Libertad, El Salvador.",
+    "alternateName": "What A Rush",
+    "url": "https://whatarush.org"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://whatarush.org/#riding-stables",
+    "name": "What A Rush Riding Stables",
+    "description": "Beachfront horseback riding, guided trail rides, horsemanship lessons, and horse therapy sessions in La Libertad, El Salvador. Operated by Shawn and D'Arcy Burke with 30+ years of horsemanship experience.",
     "url": "https://whatarush.org",
     "telephone": "+50369866030",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "Playa Cangrejera",
       "addressLocality": "La Libertad",
+      "addressRegion": "La Libertad",
       "addressCountry": "SV"
     },
     "geo": {
@@ -33,11 +43,30 @@ const structuredData = [
       "latitude": 13.4353125,
       "longitude": -89.1872656
     },
-    "image": "https://whatarush.org/images/hero-background.jpg",
+    "image": [
+      "https://whatarush.org/images/hero-background.jpg",
+      "https://whatarush.org/images/horses/paco.jpeg",
+      "https://whatarush.org/images/horses/congrejeto.jpeg"
+    ],
     "priceRange": "$$",
+    "currenciesAccepted": "USD",
+    "paymentAccepted": "Cash, Bitcoin",
+    "areaServed": {
+      "@type": "GeoCircle",
+      "geoMidpoint": {
+        "@type": "GeoCoordinates",
+        "latitude": 13.4353125,
+        "longitude": -89.1872656
+      },
+      "geoRadius": "50000"
+    },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "Shawn Burke"
     },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
@@ -48,7 +77,7 @@ const structuredData = [
           "itemOffered": {
             "@type": "Service",
             "name": "Guided Trail Rides",
-            "description": "Guided trail rides through scenic sugar cane fields, estuaries, and wooded trails."
+            "description": "1.5-2 hour guided trail rides through scenic sugar cane fields, estuaries, and wooded trails. Tack and equipment provided."
           },
           "price": "60.00",
           "priceCurrency": "USD"
@@ -57,21 +86,24 @@ const structuredData = [
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "Horse/Human Therapy Sessions"
+            "name": "Horse/Human Therapy Sessions",
+            "description": "Therapeutic sessions connecting horses and humans for healing and growth. Customized packages."
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "Horsemanship Training Lessons"
+            "name": "Horsemanship Training Lessons",
+            "description": "Learn the art of horsemanship from experienced trainers with 30+ years of experience."
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "Riding Lessons"
+            "name": "Riding Lessons",
+            "description": "Structured riding lessons for all skill levels from beginner to advanced."
           }
         }
       ]
@@ -79,23 +111,106 @@ const structuredData = [
   },
   {
     "@context": "https://schema.org",
+    "@type": "TouristAttraction",
+    "@id": "https://whatarush.org/#tourist-attraction",
+    "name": "What A Rush Beachfront Horseback Riding",
+    "description": "Beachfront horseback riding experience in Playa Cangrejera, La Libertad, El Salvador. Ride through sugar cane fields, estuaries, and wooded trails on beautiful horses.",
+    "url": "https://whatarush.org",
+    "touristType": ["Horseback Riding", "Adventure Tourism", "Ecotourism", "Beach Activities"],
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 13.4353125,
+      "longitude": -89.1872656
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Playa Cangrejera",
+      "addressLocality": "La Libertad",
+      "addressCountry": "SV"
+    },
+    "image": "https://whatarush.org/images/hero-background.jpg"
+  },
+  {
+    "@context": "https://schema.org",
     "@type": "LodgingBusiness",
-    "name": "House of Grace - Palapa Rental",
-    "description": "Beachfront palapa rental in La Libertad, El Salvador. Fully furnished with Starlink internet, pool, and beach views.",
+    "@id": "https://whatarush.org/#house-of-grace",
+    "name": "House of Grace - Beachfront Palapa Rental",
+    "description": "Beachfront palapa rental in La Libertad, El Salvador. Fully furnished 1-bedroom with Starlink internet, pool, and beach views. Nightly, weekly, monthly, and yearly rates available.",
     "url": "https://whatarush.org/#available-units",
     "telephone": "+50369866030",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "La Libertad",
+      "addressRegion": "La Libertad",
       "addressCountry": "SV"
     },
     "image": "https://whatarush.org/images/property/main%20photo.jpeg",
     "priceRange": "$250-$3700 USD",
+    "currenciesAccepted": "USD",
+    "paymentAccepted": "Cash, Bitcoin",
+    "numberOfRooms": 1,
     "amenityFeature": [
       { "@type": "LocationFeatureSpecification", "name": "Beachfront", "value": true },
       { "@type": "LocationFeatureSpecification", "name": "Starlink Internet", "value": true },
       { "@type": "LocationFeatureSpecification", "name": "Pool", "value": true },
-      { "@type": "LocationFeatureSpecification", "name": "Fully Furnished", "value": true }
+      { "@type": "LocationFeatureSpecification", "name": "Fully Furnished", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "American Standard Fixtures", "value": true }
+    ],
+    "checkinTime": "15:00",
+    "checkoutTime": "11:00"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What types of horseback riding experiences does What A Rush offer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "What A Rush offers guided trail rides through sugar cane fields, estuaries, and wooded trails ($60 USD for a 1.5-2 hour session), horse/human therapy sessions, horsemanship training lessons, and structured riding lessons for all skill levels."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need riding experience to ride at What A Rush?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No prior experience is needed. We have horses suited for all levels. Paco (Peruvian Horse) and Congrejeto (Friesian) are gentle and ideal for beginners, while Tequilla (Spanish gaited) is best for experienced riders. All necessary tack and equipment is provided."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is What A Rush located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "What A Rush Riding Stables is located at Playa Cangrejera, La Libertad, El Salvador. Look for the yellow sign. GPS coordinates: 13.4353125, -89.1872656."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I book a ride or the palapa rental?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Contact Shawn Burke via WhatsApp at +503 6986 6030. You can also message directly through the website's WhatsApp booking link."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the House of Grace palapa rental?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "House of Grace is a fully furnished beachfront palapa with 1 bedroom, 1 bathroom, Starlink internet, and pool access in La Libertad, El Salvador. Rates: $250/night, $1,500/week, $3,700/month, or $1,850/month on a yearly lease. We accept cash and Bitcoin."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does What A Rush accept Bitcoin?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, What A Rush accepts both cash and Bitcoin as payment for horseback riding services and the palapa rental."
+        }
+      }
     ]
   }
 ];
