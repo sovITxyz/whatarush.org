@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --host :: --port 3000",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.js",
     "preview": "vite preview --host :: --port 3000",
     "convert-images": "node tools/convert-to-webp.js"
   },
@@ -44,6 +44,7 @@
     "eslint": "^8.57.1",
     "eslint-config-react-app": "^7.0.1",
     "postcss": "^8.4.49",
+    "puppeteer": "^24.40.0",
     "sharp": "^0.34.5",
     "tailwindcss": "^3.4.17",
     "terser": "^5.37.0",
