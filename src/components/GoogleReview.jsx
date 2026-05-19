@@ -3,7 +3,7 @@ import { Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const GoogleReview = () => {
-  const reviewUrl = 'https://www.google.com/maps/place/What+a+RUSH+Riding+stables./@13.4353125,-89.1872656,15z/data=!4m6!3m5!1s0x8f7ccf0002a7f95f:0xbbe2eba9bd437ed7!8m2!3d13.4353125!4d-89.1872656!16s%2Fg%2F11ysmhp_w6!5m1!1e4?entry=ttu&g_ep=EgoyMDI2MDIxMS4wIKXMDSoASAFQAw%3D%3D';
+  const reviewUrl = 'https://search.google.com/local/writereview?placeid=ChIJX_mnAgDPfI8R135Dvanr4rs';
 
   return (
     <section className="py-16 px-4 bg-gradient-to-b from-amber-50 via-white to-amber-50">
