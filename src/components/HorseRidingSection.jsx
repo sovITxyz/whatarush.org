@@ -52,7 +52,6 @@ const horses = [
     images: [
       '/images/horses/carbonero.jpeg',
       '/images/horses/Carbonero.jpeg',
-      '/images/horses/carb.jpeg',
     ],
     story: 'Wise and experienced Spanish gaited horse. This guy offers an enjoyable nature ride on the back of a smooth operator. Carbonero is very intuitive and aware of his rider. He enjoys the ride as much as his rider does. He is steady, calm and reliable.'
   }
