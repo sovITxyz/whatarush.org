@@ -200,7 +200,7 @@ const structuredData = [
         "name": "What is the House of Grace palapa rental?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "House of Grace is a fully furnished beachfront palapa with 1 bedroom, 1 bathroom, Starlink internet, and pool access in La Libertad, El Salvador. Rates: $250/night, $1,500/week, $3,700/month, or $1,850/month on a yearly lease. We accept cash and Bitcoin."
+          "text": "House of Grace is a fully furnished beachfront palapa with 1 bedroom, 1 bathroom, Starlink internet, and pool access in La Libertad, El Salvador. Rates: $250/night, $1,500/week, $3,700/month, or $1,500/month on a yearly lease. We accept cash and Bitcoin."
         }
       },
       {
