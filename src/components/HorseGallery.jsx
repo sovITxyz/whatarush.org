@@ -37,7 +37,6 @@ const p = galleryPhotos;
 const photos = buildGallery([
   { src: `${p}/Tiqandpeople.jpeg`, alt: 'Tequilla with people at What A Rush Riding Stables' },
   { src: `${p}/Carbonero.jpeg`, alt: 'Carbonero the horse at What A Rush Riding Stables' },
-  { src: `${p}/carb.jpeg`, alt: 'Carbonero the horse' },
   { src: `${p}/Congrejeto1.jpeg`, alt: 'Congrejeto the Friesian horse' },
   { src: `${p}/Congrejeto2.jpeg`, alt: 'Congrejeto the Friesian horse posing' },
   { src: `${p}/Congrejeto3.jpeg`, alt: 'Congrejeto the Friesian horse close-up' },
