@@ -64,7 +64,7 @@ const RentalUnitCard = () => {
           <div className="flex justify-between items-baseline">
             <span className="text-gray-600">1 Year Lease</span>
             <span className="text-lg font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
-              $1,850.00 USD / month
+              $1,500.00 USD / month
             </span>
           </div>
         </div>
