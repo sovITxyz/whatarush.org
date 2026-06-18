@@ -84,6 +84,7 @@ const photos = buildGallery([
   { src: `${p}/riding26.jpeg`, alt: 'Beach horseback riding adventure' },
   { src: `${p}/view7.jpeg`, alt: 'Ocean view from the riding stables' },
   { src: `${p}/riding27.jpeg`, alt: 'Trail ride at What A Rush Riding Stables' },
+  { src: `${p}/riding28.jpeg`, alt: 'Riders on horseback along the beach past a palapa at What A Rush' },
   { src: `${p}/tack.jpeg`, alt: 'Horse riding saddle and tack' },
   { src: `${p}/tack1.jpeg`, alt: 'Horse bridle and riding equipment' },
   { src: `${p}/view8.jpeg`, alt: 'Scenic view of the beach and estuary' },
@@ -110,6 +111,11 @@ const videos = [
   { src: `${v}/ridingvideo7.mp4` },
   { src: `${v}/shakey-video1.MP4` },
   { src: `${v}/shakey-video2.mp4` },
+  { src: `${v}/ridingvideo8.mp4` },
+  { src: `${v}/ridingvideo9.mp4` },
+  { src: `${v}/ridingvideo10.mp4` },
+  { src: `${v}/ridingvideo11.mp4` },
+  { src: `${v}/ridingvideo12.mp4` },
 ];
 
 const GalleryCarousel = ({ items, type }) => {
