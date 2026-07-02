@@ -2,18 +2,9 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Play, X, Camera, Video } from 'lucide-react';
 import { toWebP } from '@/lib/utils';
+import { shuffle, videos } from '@/lib/galleryMedia';
 
 const galleryPhotos = '/images/gallery/photos';
-const galleryVideos = '/images/gallery/videos';
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
 
 // Spread randomized view photos evenly throughout the gallery (non-views keep their order)
 function buildGallery(items) {
@@ -95,28 +86,6 @@ const photos = buildGallery([
   { src: `${p}/tack5.jpeg`, alt: 'Horse riding gear and accessories' },
   { src: `${p}/tack7.jpeg`, alt: 'Saddle and tack at the riding stables' },
 ]);
-
-const v = galleryVideos;
-const videos = [
-  { src: `${v}/beachride.mp4` },
-  { src: `${v}/video1.mov` },
-  { src: `${v}/video2.MP4` },
-  { src: `${v}/video3.mp4` },
-  { src: `${v}/ridingvideo1.mp4` },
-  { src: `${v}/ridingvideo2.mp4` },
-  { src: `${v}/ridingvideo3.mp4` },
-  { src: `${v}/ridingvideo4.mp4` },
-  { src: `${v}/ridingvideo5.mp4` },
-  { src: `${v}/ridingvideo6.mp4` },
-  { src: `${v}/ridingvideo7.mp4` },
-  { src: `${v}/shakey-video1.MP4` },
-  { src: `${v}/shakey-video2.mp4` },
-  { src: `${v}/ridingvideo8.mp4` },
-  { src: `${v}/ridingvideo9.mp4` },
-  { src: `${v}/ridingvideo10.mp4` },
-  { src: `${v}/ridingvideo11.mp4` },
-  { src: `${v}/ridingvideo12.mp4` },
-];
 
 const GalleryCarousel = ({ items, type }) => {
   const [current, setCurrent] = useState(0);
@@ -385,6 +354,9 @@ const GalleryCarousel = ({ items, type }) => {
 
 const HorseGallery = () => {
   const [tab, setTab] = useState('photos');
+  // Shuffle once per page load; the lazy state initializer keeps the order
+  // stable across re-renders within the same visit.
+  const [shuffledVideos] = useState(() => shuffle(videos));
 
   return (
     <section id="horse-gallery" className="py-16 px-4 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
@@ -442,7 +414,7 @@ const HorseGallery = () => {
           </div>
         ) : (
           <div id="gallery-videos" role="tabpanel" aria-label="Video gallery">
-            <GalleryCarousel items={videos} type="video" />
+            <GalleryCarousel items={shuffledVideos} type="video" />
           </div>
         )}
       </div>

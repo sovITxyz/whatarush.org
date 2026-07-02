@@ -1,12 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Play } from 'lucide-react';
+import { randomHeroPreview } from '@/lib/galleryMedia';
 
 const HeroSection = () => {
+  // A different short clip on every page load, stable within a render.
+  const [previewSrc] = useState(() => randomHeroPreview());
+  // Mount the video only after the page has fully loaded so it never competes
+  // with the hero image / critical assets. Skipped during build-time
+  // prerendering (window.__PRERENDER__) so the snapshot stays hydratable.
+  const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    if (window.__PRERENDER__) return undefined;
+    if (document.readyState === 'complete') {
+      setShowVideo(true);
+      return undefined;
+    }
+    const onLoad = () => setShowVideo(true);
+    window.addEventListener('load', onLoad);
+    return () => window.removeEventListener('load', onLoad);
+  }, []);
+
   const scrollToNextSection = () => {
     const horseSection = document.getElementById('horse-riding');
     if (horseSection) {
       horseSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToGallery = () => {
+    const gallery = document.getElementById('horse-gallery');
+    if (gallery) {
+      gallery.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -63,6 +89,42 @@ const HeroSection = () => {
           >
             Scenic sugar cane fields, estuaries and guided wooded trail rides.
           </motion.p>
+
+          {/* Live video preview — a random short clip each visit */}
+          <motion.button
+            type="button"
+            onClick={scrollToGallery}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="group relative mt-8 mx-auto block w-full max-w-[16rem] md:max-w-xs aspect-video overflow-hidden rounded-2xl border border-white/20 shadow-2xl bg-black/40 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+            aria-label="Watch a riding video preview and open the gallery"
+          >
+            {showVideo ? (
+              <video
+                src={previewSrc}
+                muted
+                autoPlay
+                loop
+                playsInline
+                preload="metadata"
+                disablePictureInPicture
+                aria-hidden="true"
+                tabIndex={-1}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-amber-900/30 via-black/40 to-black/60 animate-pulse" />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-2 left-0 right-0 flex items-center justify-center gap-2 text-white/90 text-xs md:text-sm font-light tracking-wide pointer-events-none">
+              <Play className="w-3.5 h-3.5 text-amber-400 fill-amber-400 flex-shrink-0" />
+              <span>
+                Straight from the trail
+                <span className="text-amber-300 group-hover:text-amber-200 transition-colors"> — see the gallery</span>
+              </span>
+            </div>
+          </motion.button>
         </div>
       </motion.div>
 
