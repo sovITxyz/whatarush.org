@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, MessageCircle, Facebook, Instagram, Twitter, Bird } from 'lucide-react';
-import { NOSTR_NPUB, isValidNpub, njumpProfileUrl } from '@/config/nostr';
+import { MapPin, Phone, MessageCircle, Facebook, Instagram, Twitter } from 'lucide-react';
 
 const WhatsAppIcon = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -16,11 +15,6 @@ const Footer = () => {
     { icon: Instagram, name: 'Instagram', url: 'https://instagram.com/' },
     { icon: Twitter, name: 'Twitter', url: 'https://x.com/' }
   ];
-
-  // Shown only once the business npub is configured in src/config/nostr.js.
-  if (isValidNpub(NOSTR_NPUB)) {
-    socialLinks.push({ icon: Bird, name: 'Nostr', url: njumpProfileUrl(NOSTR_NPUB) });
-  }
 
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-black text-white py-12 px-4">

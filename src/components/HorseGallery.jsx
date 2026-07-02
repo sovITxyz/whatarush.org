@@ -3,8 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Play, X, Camera, Video } from 'lucide-react';
 import { toWebP } from '@/lib/utils';
 import { shuffle, videos } from '@/lib/galleryMedia';
-import NostrShareButton from '@/components/NostrShareButton';
-import { SITE_URL } from '@/config/nostr';
 
 const galleryPhotos = '/images/gallery/photos';
 
@@ -206,19 +204,6 @@ const GalleryCarousel = ({ items, type }) => {
 
   const item = items[current];
 
-  const mediaLabel = type === 'video' ? 'video' : 'photo';
-  const shareText = [
-    `${item.alt || `A ${mediaLabel} from What A Rush Riding Stables`} — beachfront horseback riding in La Libertad, El Salvador.`,
-    new URL(item.src, SITE_URL).href,
-    `${SITE_URL}\n#horsebackriding #ElSalvador #travel`,
-  ].join('\n\n');
-  const shareTags = [
-    ['t', 'horsebackriding'],
-    ['t', 'elsalvador'],
-    ['t', 'travel'],
-    ['r', SITE_URL],
-  ];
-
   return (
     <div ref={sectionRef}>
       {/* Slideshow */}
@@ -267,15 +252,6 @@ const GalleryCarousel = ({ items, type }) => {
           {/* Counter overlaid top-right */}
           <div className="absolute top-3 right-3 z-10 bg-black/50 text-white/80 text-xs px-2.5 py-1 rounded-full">
             {current + 1} / {items.length}
-          </div>
-
-          {/* Share the current item on Nostr, top-left */}
-          <div className="absolute top-3 left-3 z-10">
-            <NostrShareButton
-              text={shareText}
-              tags={shareTags}
-              ariaLabel={`Share this ${mediaLabel} on Nostr`}
-            />
           </div>
         </div>
 
