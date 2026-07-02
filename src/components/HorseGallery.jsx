@@ -2,18 +2,11 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Play, X, Camera, Video } from 'lucide-react';
 import { toWebP } from '@/lib/utils';
+import { shuffle, videos } from '@/lib/galleryMedia';
+import NostrShareButton from '@/components/NostrShareButton';
+import { SITE_URL } from '@/config/nostr';
 
 const galleryPhotos = '/images/gallery/photos';
-const galleryVideos = '/images/gallery/videos';
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
 
 // Spread randomized view photos evenly throughout the gallery (non-views keep their order)
 function buildGallery(items) {
@@ -95,28 +88,6 @@ const photos = buildGallery([
   { src: `${p}/tack5.jpeg`, alt: 'Horse riding gear and accessories' },
   { src: `${p}/tack7.jpeg`, alt: 'Saddle and tack at the riding stables' },
 ]);
-
-const v = galleryVideos;
-const videos = [
-  { src: `${v}/beachride.mp4` },
-  { src: `${v}/video1.mov` },
-  { src: `${v}/video2.MP4` },
-  { src: `${v}/video3.mp4` },
-  { src: `${v}/ridingvideo1.mp4` },
-  { src: `${v}/ridingvideo2.mp4` },
-  { src: `${v}/ridingvideo3.mp4` },
-  { src: `${v}/ridingvideo4.mp4` },
-  { src: `${v}/ridingvideo5.mp4` },
-  { src: `${v}/ridingvideo6.mp4` },
-  { src: `${v}/ridingvideo7.mp4` },
-  { src: `${v}/shakey-video1.MP4` },
-  { src: `${v}/shakey-video2.mp4` },
-  { src: `${v}/ridingvideo8.mp4` },
-  { src: `${v}/ridingvideo9.mp4` },
-  { src: `${v}/ridingvideo10.mp4` },
-  { src: `${v}/ridingvideo11.mp4` },
-  { src: `${v}/ridingvideo12.mp4` },
-];
 
 const GalleryCarousel = ({ items, type }) => {
   const [current, setCurrent] = useState(0);
@@ -235,6 +206,19 @@ const GalleryCarousel = ({ items, type }) => {
 
   const item = items[current];
 
+  const mediaLabel = type === 'video' ? 'video' : 'photo';
+  const shareText = [
+    `${item.alt || `A ${mediaLabel} from What A Rush Riding Stables`} — beachfront horseback riding in La Libertad, El Salvador.`,
+    new URL(item.src, SITE_URL).href,
+    `${SITE_URL}\n#horsebackriding #ElSalvador #travel`,
+  ].join('\n\n');
+  const shareTags = [
+    ['t', 'horsebackriding'],
+    ['t', 'elsalvador'],
+    ['t', 'travel'],
+    ['r', SITE_URL],
+  ];
+
   return (
     <div ref={sectionRef}>
       {/* Slideshow */}
@@ -283,6 +267,15 @@ const GalleryCarousel = ({ items, type }) => {
           {/* Counter overlaid top-right */}
           <div className="absolute top-3 right-3 z-10 bg-black/50 text-white/80 text-xs px-2.5 py-1 rounded-full">
             {current + 1} / {items.length}
+          </div>
+
+          {/* Share the current item on Nostr, top-left */}
+          <div className="absolute top-3 left-3 z-10">
+            <NostrShareButton
+              text={shareText}
+              tags={shareTags}
+              ariaLabel={`Share this ${mediaLabel} on Nostr`}
+            />
           </div>
         </div>
 
@@ -385,6 +378,9 @@ const GalleryCarousel = ({ items, type }) => {
 
 const HorseGallery = () => {
   const [tab, setTab] = useState('photos');
+  // Shuffle once per page load; the lazy state initializer keeps the order
+  // stable across re-renders within the same visit.
+  const [shuffledVideos] = useState(() => shuffle(videos));
 
   return (
     <section id="horse-gallery" className="py-16 px-4 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
@@ -442,7 +438,7 @@ const HorseGallery = () => {
           </div>
         ) : (
           <div id="gallery-videos" role="tabpanel" aria-label="Video gallery">
-            <GalleryCarousel items={videos} type="video" />
+            <GalleryCarousel items={shuffledVideos} type="video" />
           </div>
         )}
       </div>

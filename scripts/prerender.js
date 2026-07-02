@@ -114,6 +114,13 @@ async function prerender() {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 50000 });
 
+    // Let the app know it is being prerendered so it can skip client-only,
+    // non-deterministic UI (e.g. the hero video preview) and keep the
+    // snapshot hydratable.
+    await page.evaluateOnNewDocument(() => {
+      window.__PRERENDER__ = true;
+    });
+
     await page.goto(`http://127.0.0.1:${port}/`, {
       waitUntil: 'networkidle0',
       timeout: TIMEOUT,
