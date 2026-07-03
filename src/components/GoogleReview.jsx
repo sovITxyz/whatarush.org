@@ -15,7 +15,7 @@ const GoogleReview = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-10"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-700 bg-clip-text text-transparent">
             Love Your Experience?
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -51,7 +51,7 @@ const GoogleReview = () => {
         >
           <Button
             asChild
-            className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-4 px-10 rounded-full text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
+            className="bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold py-4 px-10 rounded-full text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
           >
             <a href={reviewUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center">
               <Star className="w-5 h-5 mr-2 fill-white" />

@@ -52,7 +52,7 @@ const ServicesSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-700 bg-clip-text text-transparent">
             We Offer
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -84,14 +84,14 @@ const ServicesSection = () => {
 
                   {service.duration && (
                     <div className="flex items-center gap-2 text-gray-700 mb-3">
-                      <Clock className="w-4 h-4 text-amber-600" />
+                      <Clock className="w-4 h-4 text-teal-600" />
                       <span className="text-sm">{service.duration}</span>
                     </div>
                   )}
 
                   <div className="flex items-center gap-2 mb-4">
                     {service.price !== 'custom' && <DollarSign className="w-5 h-5 text-green-600" />}
-                    <span className={`text-lg font-bold ${service.price === 'custom' ? 'text-amber-600' : service.price ? 'text-green-600' : 'text-gray-400 italic'}`}>
+                    <span className={`text-lg font-bold ${service.price === 'custom' ? 'text-teal-600' : service.price ? 'text-green-600' : 'text-gray-400 italic'}`}>
                       {service.priceLabel}
                     </span>
                   </div>

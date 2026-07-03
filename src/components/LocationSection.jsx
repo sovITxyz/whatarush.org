@@ -19,7 +19,7 @@ const LocationSection = ({ title, mapUrl, image, imageAlt }) => {
             <div className={`p-8 md:p-12 text-center bg-gradient-to-br from-amber-50 to-orange-50/50 flex flex-col items-center justify-center ${image ? "md:w-1/2" : "w-full"}`}>
               <div className="flex justify-center mb-6">
                 <div className="bg-white p-4 rounded-full shadow-md">
-                  <MapPin className="w-8 h-8 text-orange-600" />
+                  <MapPin className="w-8 h-8 text-teal-600" />
                 </div>
               </div>
 
@@ -29,7 +29,7 @@ const LocationSection = ({ title, mapUrl, image, imageAlt }) => {
 
               <Button
                 asChild
-                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold py-6 px-8 rounded-full text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group"
+                className="bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-semibold py-6 px-8 rounded-full text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group"
               >
                 <a href={mapUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                   <span>View on Google Maps</span>

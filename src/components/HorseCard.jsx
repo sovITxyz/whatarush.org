@@ -39,7 +39,7 @@ const HorseCard = ({ name, images, imgTick, story, index, onLearnMore }) => {
 
         {/* Content */}
         <div className="p-6">
-          <h3 className="text-2xl font-bold text-gray-800 mb-3 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+          <h3 className="text-2xl font-bold text-gray-800 mb-3 bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
             {name}
           </h3>
           <p className="text-gray-600 leading-relaxed mb-4 line-clamp-4">
@@ -48,7 +48,7 @@ const HorseCard = ({ name, images, imgTick, story, index, onLearnMore }) => {
 
           <Button
             onClick={onLearnMore}
-            className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold py-2 rounded-lg transition-all duration-300 transform hover:scale-105"
+            className="w-full bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-semibold py-2 rounded-lg transition-all duration-300 transform hover:scale-105"
           >
             Meet {name}
           </Button>
