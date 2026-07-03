@@ -38,9 +38,9 @@ export const videos = [
   { src: `${v}/ridingvideo12.mp4` },
 ];
 
-// Small clips (roughly 1.5–3 MB each) that are cheap enough to autoplay as a
-// muted hero preview without hurting initial page load. Keep multi-megabyte
-// files (beachride.mp4, video2.MP4, ...) out of this list.
+// Small clips (roughly 1.5–3 MB each) that are cheap enough to rotate as the
+// muted full-bleed hero background without hurting initial page load. Keep
+// multi-megabyte files (beachride.mp4, video2.MP4, ...) out of this list.
 export const heroPreviewVideos = [
   `${v}/ridingvideo1.mp4`,
   `${v}/ridingvideo3.mp4`,
@@ -50,7 +50,3 @@ export const heroPreviewVideos = [
   `${v}/ridingvideo11.mp4`,
   `${v}/ridingvideo12.mp4`,
 ];
-
-export function randomHeroPreview() {
-  return heroPreviewVideos[Math.floor(Math.random() * heroPreviewVideos.length)];
-}

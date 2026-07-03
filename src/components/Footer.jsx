@@ -27,7 +27,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent mb-4">
+            <h3 className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-500 bg-clip-text text-transparent mb-4">
               House of Grace
             </h3>
             <p className="text-gray-400 leading-relaxed">
@@ -42,7 +42,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <h4 className="text-lg font-semibold mb-4 text-amber-400">Contact Us</h4>
+            <h4 className="text-lg font-semibold mb-4 text-teal-400">Contact Us</h4>
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-gray-400">
                 <MapPin className="w-5 h-5 text-teal-400 flex-shrink-0" />
@@ -78,7 +78,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h4 className="text-lg font-semibold mb-4 text-amber-400">Follow Us</h4>
+            <h4 className="text-lg font-semibold mb-4 text-teal-400">Follow Us</h4>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
                 <a

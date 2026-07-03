@@ -237,7 +237,7 @@ function App() {
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-white focus:p-4 focus:text-amber-700 focus:font-bold focus:rounded-md focus:shadow-lg">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-white focus:p-4 focus:text-teal-700 focus:font-bold focus:rounded-md focus:shadow-lg">
         Skip to main content
       </a>
 

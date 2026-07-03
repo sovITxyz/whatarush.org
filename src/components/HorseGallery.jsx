@@ -258,14 +258,14 @@ const GalleryCarousel = ({ items, type }) => {
         {/* Arrows */}
         <button
           onClick={goPrev}
-          className="absolute left-2 md:-left-14 top-1/2 -translate-y-1/2 z-10 w-9 h-9 md:w-11 md:h-11 flex items-center justify-center rounded-full bg-white/90 shadow-lg hover:bg-amber-100 transition-all text-amber-700 hover:text-amber-900"
+          className="absolute left-2 md:-left-14 top-1/2 -translate-y-1/2 z-10 w-9 h-9 md:w-11 md:h-11 flex items-center justify-center rounded-full bg-white/90 shadow-lg hover:bg-teal-100 transition-all text-teal-700 hover:text-teal-900"
           aria-label="Previous"
         >
           <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
         </button>
         <button
           onClick={goNext}
-          className="absolute right-2 md:-right-14 top-1/2 -translate-y-1/2 z-10 w-9 h-9 md:w-11 md:h-11 flex items-center justify-center rounded-full bg-white/90 shadow-lg hover:bg-amber-100 transition-all text-amber-700 hover:text-amber-900"
+          className="absolute right-2 md:-right-14 top-1/2 -translate-y-1/2 z-10 w-9 h-9 md:w-11 md:h-11 flex items-center justify-center rounded-full bg-white/90 shadow-lg hover:bg-teal-100 transition-all text-teal-700 hover:text-teal-900"
           aria-label="Next"
         >
           <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
@@ -283,7 +283,7 @@ const GalleryCarousel = ({ items, type }) => {
             aria-selected={i === current}
             aria-label={type === 'video' ? `Play video ${i + 1} of ${items.length}` : `View photo ${i + 1} of ${items.length}`}
             className={`flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden border-2 transition-all ${
-              i === current ? 'border-amber-500 scale-105 shadow-md' : 'border-transparent opacity-60 hover:opacity-100'
+              i === current ? 'border-teal-500 scale-105 shadow-md' : 'border-transparent opacity-60 hover:opacity-100'
             }`}
           >
             {type === 'video' ? (
@@ -368,7 +368,7 @@ const HorseGallery = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-10"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-700 bg-clip-text text-transparent">
             Gallery
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -385,8 +385,8 @@ const HorseGallery = () => {
             onClick={() => setTab('photos')}
             className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-lg transition-all duration-300 ${
               tab === 'photos'
-                ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg scale-105'
-                : 'bg-white text-gray-600 hover:bg-amber-50 shadow'
+                ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-lg scale-105'
+                : 'bg-white text-gray-600 hover:bg-teal-50 shadow'
             }`}
           >
             <Camera className="w-5 h-5" />
@@ -399,8 +399,8 @@ const HorseGallery = () => {
             onClick={() => setTab('videos')}
             className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-lg transition-all duration-300 ${
               tab === 'videos'
-                ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg scale-105'
-                : 'bg-white text-gray-600 hover:bg-amber-50 shadow'
+                ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-lg scale-105'
+                : 'bg-white text-gray-600 hover:bg-teal-50 shadow'
             }`}
           >
             <Video className="w-5 h-5" />

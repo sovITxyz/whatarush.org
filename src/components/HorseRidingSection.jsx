@@ -131,7 +131,7 @@ const HorseRidingSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-700 bg-clip-text text-transparent">
             Meet Our Horses
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -178,7 +178,7 @@ const HorseRidingSection = () => {
                 {/* Left Arrow */}
                 <button
                   onClick={goToPrevious}
-                  className="absolute -left-4 md:-left-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/90 shadow-lg hover:bg-amber-100 hover:shadow-xl transition-all duration-300 text-amber-700 hover:text-amber-900"
+                  className="absolute -left-4 md:-left-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/90 shadow-lg hover:bg-teal-100 hover:shadow-xl transition-all duration-300 text-teal-700 hover:text-teal-900"
                   aria-label="Previous horse"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -224,7 +224,7 @@ const HorseRidingSection = () => {
                         </p>
                         <Button
                           onClick={closeExpanded}
-                          className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold py-2 rounded-lg transition-all duration-300"
+                          className="w-full bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-semibold py-2 rounded-lg transition-all duration-300"
                         >
                           Show Less
                         </Button>
@@ -236,7 +236,7 @@ const HorseRidingSection = () => {
                 {/* Right Arrow */}
                 <button
                   onClick={goToNext}
-                  className="absolute -right-4 md:-right-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/90 shadow-lg hover:bg-amber-100 hover:shadow-xl transition-all duration-300 text-amber-700 hover:text-amber-900"
+                  className="absolute -right-4 md:-right-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/90 shadow-lg hover:bg-teal-100 hover:shadow-xl transition-all duration-300 text-teal-700 hover:text-teal-900"
                   aria-label="Next horse"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -255,7 +255,7 @@ const HorseRidingSection = () => {
                       }}
                       className={`w-3 h-3 rounded-full transition-all duration-300 ${
                         index === expandedIndex
-                          ? 'bg-amber-500 scale-125'
+                          ? 'bg-teal-500 scale-125'
                           : 'bg-white/60 hover:bg-white/90'
                       }`}
                       aria-label={`Go to ${horse.name}`}

@@ -58,7 +58,7 @@ const Navigation = () => {
           <a
             href="#home"
             onClick={(e) => scrollToSection(e, 'home')}
-            className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent hover:from-amber-700 hover:to-orange-700 transition-all duration-300"
+            className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent hover:from-teal-700 hover:to-cyan-700 transition-all duration-300"
           >
             House of Grace
           </a>
@@ -72,8 +72,8 @@ const Navigation = () => {
                 onClick={(e) => scrollToSection(e, link.sectionId)}
                 className="flex items-center gap-2 font-medium transition-all duration-300 group"
               >
-                <link.icon className="w-5 h-5 text-amber-600 group-hover:text-amber-700" />
-                <span className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent group-hover:from-amber-700 group-hover:to-orange-700">
+                <link.icon className="w-5 h-5 text-teal-600 group-hover:text-teal-700" />
+                <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent group-hover:from-teal-700 group-hover:to-cyan-700">
                   {link.name}
                 </span>
               </a>
@@ -122,8 +122,8 @@ const Navigation = () => {
                   onClick={(e) => scrollToSection(e, link.sectionId)}
                   className="flex items-center gap-2 font-medium transition-all py-2 group"
                 >
-                  <link.icon className="w-5 h-5 text-amber-600 group-hover:text-amber-700" />
-                  <span className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent group-hover:from-amber-700 group-hover:to-orange-700">
+                  <link.icon className="w-5 h-5 text-teal-600 group-hover:text-teal-700" />
+                  <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent group-hover:from-teal-700 group-hover:to-cyan-700">
                     {link.name}
                   </span>
                 </a>
