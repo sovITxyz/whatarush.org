@@ -100,9 +100,14 @@ const GalleryCarousel = ({ items, type }) => {
   const sectionRef = useRef(null);
   const slideDelayRef = useRef(10000);
 
-  // Preload all media so navigation is instant
+  // Preload a small window around the current item so navigation feels
+  // instant without downloading the whole set up front (the videos alone
+  // total ~200MB — beachride.mp4 is 78MB).
   useEffect(() => {
-    items.forEach((item) => {
+    const links = [];
+    [1, 2, -1].forEach((offset) => {
+      const item = items[(current + offset + items.length) % items.length];
+      if (!item) return;
       if (type === 'image') {
         const img = new Image();
         img.src = item.src;
@@ -112,9 +117,11 @@ const GalleryCarousel = ({ items, type }) => {
         link.as = 'video';
         link.href = item.src;
         document.head.appendChild(link);
+        links.push(link);
       }
     });
-  }, [items, type]);
+    return () => links.forEach((link) => link.remove());
+  }, [items, type, current]);
 
   // Track visibility with IntersectionObserver
   useEffect(() => {

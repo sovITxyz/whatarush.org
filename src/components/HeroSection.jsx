@@ -30,6 +30,21 @@ const HeroSection = () => {
     return () => window.removeEventListener('load', onLoad);
   }, []);
 
+  // Start downloading the first clip right away, in parallel with the rest of
+  // the page, so it's (nearly) cached by the time the video mounts on window
+  // `load`. The <video> element itself still waits so decoding/playback never
+  // competes with the critical rendering path.
+  useEffect(() => {
+    if (window.__PRERENDER__) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'video';
+    link.href = playlist[0];
+    document.head.appendChild(link);
+    return () => link.remove();
+  }, [playlist]);
+
   // Kick playback on mount and on every clip swap. Autoplay can be rejected
   // (low-power mode, data saver); swallowing the rejection leaves the static
   // image visible, which is the intended fallback.

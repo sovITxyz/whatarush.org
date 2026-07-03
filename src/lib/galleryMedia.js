@@ -38,15 +38,19 @@ export const videos = [
   { src: `${v}/ridingvideo12.mp4` },
 ];
 
-// Small clips (roughly 1.5–3 MB each) that are cheap enough to rotate as the
-// muted full-bleed hero background without hurting initial page load. Keep
-// multi-megabyte files (beachride.mp4, video2.MP4, ...) out of this list.
+// Optimized variants of the small clips (audio stripped, CRF 28, faststart —
+// regenerate with tools/optimize-hero-videos.sh) that rotate as the muted
+// full-bleed hero background. Keep multi-megabyte files (beachride.mp4,
+// video2.MP4, ...) out of this list; the gallery serves the full-quality
+// originals with sound from /images/gallery/videos.
+const h = '/images/hero-videos';
+
 export const heroPreviewVideos = [
-  `${v}/ridingvideo1.mp4`,
-  `${v}/ridingvideo3.mp4`,
-  `${v}/ridingvideo7.mp4`,
-  `${v}/ridingvideo9.mp4`,
-  `${v}/ridingvideo10.mp4`,
-  `${v}/ridingvideo11.mp4`,
-  `${v}/ridingvideo12.mp4`,
+  `${h}/ridingvideo1.mp4`,
+  `${h}/ridingvideo3.mp4`,
+  `${h}/ridingvideo7.mp4`,
+  `${h}/ridingvideo9.mp4`,
+  `${h}/ridingvideo10.mp4`,
+  `${h}/ridingvideo11.mp4`,
+  `${h}/ridingvideo12.mp4`,
 ];
