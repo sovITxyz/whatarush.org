@@ -44,6 +44,24 @@ const HeroSection = () => {
     if (p && typeof p.catch === 'function') p.catch(() => {});
   }, [showVideo, clipIndex]);
 
+  // Chrome defers playback for tabs that load while hidden (play() resolves
+  // but the video never advances). Re-kick playback when the tab becomes
+  // visible so a background-opened tab doesn't show a frozen first frame.
+  useEffect(() => {
+    if (!showVideo) return undefined;
+    const onVisible = () => {
+      if (document.visibilityState !== 'visible') return;
+      const vid = videoRef.current;
+      if (vid && vid.paused) {
+        vid.muted = true;
+        const p = vid.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      }
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
+  }, [showVideo]);
+
   // Preload only the next clip so the swap on `ended` isn't laggy while the
   // idle cost stays bounded to current + next.
   useEffect(() => {
@@ -87,7 +105,7 @@ const HeroSection = () => {
             src="/images/hero-background.jpg"
             alt=""
             className="w-full h-full object-cover object-center"
-            fetchPriority="high"
+            fetchpriority="high"
           />
         </picture>
         {showVideo && (
