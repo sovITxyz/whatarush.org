@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Menu, X, Home as HomeIcon, User, Sparkles, Camera, Users, Building } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -42,11 +41,8 @@ const Navigation = () => {
   ];
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md border-b border-white/20 shadow-2xl ${
+    <nav
+      className={`animate-nav-slide-down fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md border-b border-white/20 shadow-2xl ${
         isScrolled
           ? 'bg-white/15'
           : 'bg-white/10'
@@ -108,11 +104,8 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden mt-4 py-4 border-t border-gray-200"
+          <div
+            className="animate-mobile-menu-in md:hidden mt-4 py-4 border-t border-gray-200"
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
@@ -139,10 +132,10 @@ const Navigation = () => {
                 </a>
               </Button>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
-    </motion.nav>
+    </nav>
   );
 };
 

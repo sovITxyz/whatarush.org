@@ -87,3 +87,63 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to bottom, rgb(13 148 136), rgb(14 116 144));
 }
+
+/* Entrance animations — CSS replacements for the framer-motion entrances that
+   used to sit in the eager critical path (Navigation + HeroSection). Keeping
+   these in CSS lets framer-motion load only for below-the-fold sections.
+   animation-fill-mode: both holds the "from" frame during any delay and the
+   "to" frame afterwards, so the prerender serializes a settled DOM (and there
+   are no inline transform styles to cause hydration-style mismatches). */
+@keyframes nav-slide-down {
+  from { transform: translateY(-100px); }
+  to   { transform: translateY(0); }
+}
+@keyframes mobile-menu-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-rise-sm {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-pop {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+/* Keeps the -50% X (the button is centered with left-1/2 + -translate-x-1/2);
+   an unqualified translateY here would drop that centering mid-animation. Under
+   reduced motion the animation is disabled and the Tailwind -translate-x-1/2
+   class centers it statically. */
+@keyframes scroll-hint {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -8px); }
+  50%      { opacity: 1;   transform: translate(-50%, 0); }
+}
+
+.animate-nav-slide-down { animation: nav-slide-down 0.6s ease-out both; }
+.animate-mobile-menu-in { animation: mobile-menu-in 0.25s ease-out both; }
+.animate-hero-rise      { animation: hero-rise 1s ease-out both; }
+.animate-hero-rise-sm   { animation: hero-rise-sm 0.8s ease-out both; }
+.animate-hero-pop       { animation: hero-pop 0.8s ease-out both; }
+.animate-scroll-hint    { animation: scroll-hint 1.8s ease-in-out infinite; }
+
+/* animation-delay helpers (Tailwind's delay-* utilities set transition-delay,
+   not animation-delay, so these are named distinctly to avoid collision). */
+.anim-delay-200 { animation-delay: 0.2s; }
+.anim-delay-400 { animation-delay: 0.4s; }
+.anim-delay-600 { animation-delay: 0.6s; }
+.anim-delay-800 { animation-delay: 0.8s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-nav-slide-down,
+  .animate-mobile-menu-in,
+  .animate-hero-rise,
+  .animate-hero-rise-sm,
+  .animate-hero-pop,
+  .animate-scroll-hint {
+    animation: none;
+  }
+}
