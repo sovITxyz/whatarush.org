@@ -5,7 +5,9 @@
 # changing any clip listed in heroPreviewVideos (src/lib/galleryMedia.js).
 set -euo pipefail
 
-SRC_DIR="public/images/gallery/videos"
+# Masters live in media-src/ (kept out of the published tree). The hero clips
+# reuse the gallery masters, re-encoded muted for the full-bleed background.
+SRC_DIR="media-src/gallery-videos"
 OUT_DIR="public/images/hero-videos"
 CLIPS=(ridingvideo1 ridingvideo3 ridingvideo7 ridingvideo9 ridingvideo10 ridingvideo11 ridingvideo12)
 

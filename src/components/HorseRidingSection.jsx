@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import HorseCard from './HorseCard';
 import { Button } from '@/components/ui/button';
-import { toWebP } from '@/lib/utils';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const horses = [
   {
@@ -201,14 +201,12 @@ const HorseRidingSection = () => {
                     >
                       {/* Expanded Image */}
                       <div className="relative overflow-hidden h-[450px]">
-                        <picture>
-                          <source srcSet={toWebP(horses[expandedIndex].images[imgTick % horses[expandedIndex].images.length])} type="image/webp" />
-                          <img
-                            src={horses[expandedIndex].images[imgTick % horses[expandedIndex].images.length]}
-                            alt={`${horses[expandedIndex].name} - Beautiful horse at What A Rush Riding Stables`}
-                            className="w-full h-full object-cover transition-opacity duration-700"
-                          />
-                        </picture>
+                        <ResponsiveImage
+                          src={horses[expandedIndex].images[imgTick % horses[expandedIndex].images.length]}
+                          alt={`${horses[expandedIndex].name} - Beautiful horse at What A Rush Riding Stables`}
+                          sizes="(max-width: 768px) 100vw, 672px"
+                          className="w-full h-full object-cover transition-opacity duration-700"
+                        />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                         <div className="absolute bottom-0 left-0 right-0 p-6">
                           <h3 className="text-4xl font-bold text-white drop-shadow-lg">

@@ -6,6 +6,8 @@
 
 const galleryVideos = '/images/gallery/videos';
 const v = galleryVideos;
+// Poster frames extracted by tools/optimize-gallery-videos.sh (one WebP per clip).
+const vp = `${galleryVideos}/posters`;
 
 // Fisher–Yates shuffle. Returns a new array; never mutates the input.
 export function shuffle(arr) {
@@ -17,25 +19,28 @@ export function shuffle(arr) {
   return a;
 }
 
+// Filenames are normalized to lowercase .mp4 by tools/optimize-gallery-videos.sh
+// (the masters mix .mp4/.MP4/.mov). `heavy: true` marks clips large enough that
+// the gallery shows a poster + click-to-load instead of auto-fetching them.
 export const videos = [
-  { src: `${v}/beachride.mp4` },
-  { src: `${v}/video1.mov` },
-  { src: `${v}/video2.MP4` },
-  { src: `${v}/video3.mp4` },
-  { src: `${v}/ridingvideo1.mp4` },
-  { src: `${v}/ridingvideo2.mp4` },
-  { src: `${v}/ridingvideo3.mp4` },
-  { src: `${v}/ridingvideo4.mp4` },
-  { src: `${v}/ridingvideo5.mp4` },
-  { src: `${v}/ridingvideo6.mp4` },
-  { src: `${v}/ridingvideo7.mp4` },
-  { src: `${v}/shakey-video1.MP4` },
-  { src: `${v}/shakey-video2.mp4` },
-  { src: `${v}/ridingvideo8.mp4` },
-  { src: `${v}/ridingvideo9.mp4` },
-  { src: `${v}/ridingvideo10.mp4` },
-  { src: `${v}/ridingvideo11.mp4` },
-  { src: `${v}/ridingvideo12.mp4` },
+  { src: `${v}/beachride.mp4`, poster: `${vp}/beachride.webp`, heavy: true },
+  { src: `${v}/video1.mp4`, poster: `${vp}/video1.webp` },
+  { src: `${v}/video2.mp4`, poster: `${vp}/video2.webp`, heavy: true },
+  { src: `${v}/video3.mp4`, poster: `${vp}/video3.webp` },
+  { src: `${v}/ridingvideo1.mp4`, poster: `${vp}/ridingvideo1.webp` },
+  { src: `${v}/ridingvideo2.mp4`, poster: `${vp}/ridingvideo2.webp` },
+  { src: `${v}/ridingvideo3.mp4`, poster: `${vp}/ridingvideo3.webp` },
+  { src: `${v}/ridingvideo4.mp4`, poster: `${vp}/ridingvideo4.webp` },
+  { src: `${v}/ridingvideo5.mp4`, poster: `${vp}/ridingvideo5.webp` },
+  { src: `${v}/ridingvideo6.mp4`, poster: `${vp}/ridingvideo6.webp` },
+  { src: `${v}/ridingvideo7.mp4`, poster: `${vp}/ridingvideo7.webp` },
+  { src: `${v}/shakey-video1.mp4`, poster: `${vp}/shakey-video1.webp`, heavy: true },
+  { src: `${v}/shakey-video2.mp4`, poster: `${vp}/shakey-video2.webp` },
+  { src: `${v}/ridingvideo8.mp4`, poster: `${vp}/ridingvideo8.webp` },
+  { src: `${v}/ridingvideo9.mp4`, poster: `${vp}/ridingvideo9.webp` },
+  { src: `${v}/ridingvideo10.mp4`, poster: `${vp}/ridingvideo10.webp` },
+  { src: `${v}/ridingvideo11.mp4`, poster: `${vp}/ridingvideo11.webp` },
+  { src: `${v}/ridingvideo12.mp4`, poster: `${vp}/ridingvideo12.webp` },
 ];
 
 // Optimized variants of the small clips (audio stripped, CRF 28, faststart —
