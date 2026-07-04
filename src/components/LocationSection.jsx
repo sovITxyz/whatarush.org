@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { toWebP } from '@/lib/utils';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const LocationSection = ({ title, mapUrl, image, imageAlt }) => {
   return (
@@ -40,15 +40,13 @@ const LocationSection = ({ title, mapUrl, image, imageAlt }) => {
 
             {image && (
               <div className="md:w-1/2">
-                <picture>
-                  <source srcSet={toWebP(image)} type="image/webp" />
-                  <img
-                    src={image}
-                    alt={imageAlt || title}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                  />
-                </picture>
+                <ResponsiveImage
+                  src={image}
+                  alt={imageAlt || title}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
               </div>
             )}
           </div>

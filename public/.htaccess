@@ -16,11 +16,26 @@
 <IfModule mod_headers.c>
   Header set X-Powered-By "Hostinger Horizons"
 
-  # Cache everything on CDN by default
+  # Default: 7-day shared/CDN cache, always revalidate in the browser
   Header set Cache-Control "public, s-maxage=604800, max-age=0"
 
-  # Cache in browser all assets
+  # Content-hashed build output — the filename changes whenever the bytes
+  # change, so it is safe to cache forever.
   <If "%{REQUEST_URI} =~ m#^/assets/.*$#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+
+  # Media (images + video) lives under /images/ with stable, non-hashed names
+  # (beachride.mp4, hero-background.jpg, ...). 30 days balances repeat-visit
+  # speed against update latency; stale-while-revalidate refreshes in the
+  # background. NOTE: when replacing a media file with new content, rename it
+  # (or append ?v=N at its reference) so warm caches pick it up.
+  <If "%{REQUEST_URI} =~ m#^/images/.*$#">
+    Header set Cache-Control "public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=86400"
+  </If>
+
+  # Root favicon (stable) — 7 days
+  <If "%{REQUEST_URI} =~ m#^/favicon\.svg$#">
     Header set Cache-Control "public, max-age=604800"
   </If>
 </IfModule>

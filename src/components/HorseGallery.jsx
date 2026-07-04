@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Play, X, Camera, Video } from 'lucide-react';
-import { toWebP } from '@/lib/utils';
+import ResponsiveImage from '@/components/ResponsiveImage';
 import { shuffle, videos } from '@/lib/galleryMedia';
 
 const galleryPhotos = '/images/gallery/photos';
@@ -92,6 +92,9 @@ const GalleryCarousel = ({ items, type }) => {
   const [direction, setDirection] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  // Heavy clips (beachride, video2, ...) show a poster + play button and only
+  // download once the user opts in, so a ~16MB file never streams on its own.
+  const [videoActivated, setVideoActivated] = useState(false);
   const thumbsRef = useRef(null);
   const thumbRefs = useRef([]);
   const isFirstRender = useRef(true);
@@ -111,7 +114,8 @@ const GalleryCarousel = ({ items, type }) => {
       if (type === 'image') {
         const img = new Image();
         img.src = item.src;
-      } else {
+      } else if (!item.heavy) {
+        // Heavy clips are click-to-load; never prefetch them.
         const link = document.createElement('link');
         link.rel = 'preload';
         link.as = 'video';
@@ -122,6 +126,21 @@ const GalleryCarousel = ({ items, type }) => {
     });
     return () => links.forEach((link) => link.remove());
   }, [items, type, current]);
+
+  // Reset click-to-load state whenever the visible item changes.
+  useEffect(() => {
+    setVideoActivated(false);
+  }, [current, type]);
+
+  // When a heavy clip is activated, start playback — the preceding click is the
+  // user gesture that allows an unmuted video to play.
+  useEffect(() => {
+    if (!videoActivated) return;
+    const vid = mainVideoRef.current;
+    if (!vid) return;
+    const p = vid.play();
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+  }, [videoActivated]);
 
   // Track visibility with IntersectionObserver
   useEffect(() => {
@@ -231,27 +250,46 @@ const GalleryCarousel = ({ items, type }) => {
               className="w-full h-full"
             >
               {type === 'video' ? (
-                <video
-                  ref={mainVideoRef}
-                  key={item.src}
-                  src={item.src}
-                  controls
-                  playsInline
-                  preload="none"
-                  autoPlay={isVisible}
-                  onEnded={goNext}
-                  className="w-full h-full object-contain"
-                />
-              ) : (
-                <picture>
-                  <source srcSet={toWebP(item.src)} type="image/webp" />
-                  <img
+                item.heavy && !videoActivated ? (
+                  <button
+                    type="button"
+                    onClick={() => setVideoActivated(true)}
+                    className="group/vid relative w-full h-full"
+                    aria-label="Play video"
+                  >
+                    <img
+                      src={item.poster}
+                      alt={item.alt || 'Gallery video at What A Rush Riding Stables'}
+                      className="w-full h-full object-contain"
+                    />
+                    <span className="absolute inset-0 flex items-center justify-center">
+                      <span className="w-16 h-16 rounded-full bg-black/50 group-hover/vid:bg-black/70 flex items-center justify-center transition-colors">
+                        <Play className="w-8 h-8 text-white translate-x-0.5" />
+                      </span>
+                    </span>
+                  </button>
+                ) : (
+                  <video
+                    ref={mainVideoRef}
+                    key={item.src}
                     src={item.src}
-                    alt={item.alt || 'Gallery photo at What A Rush Riding Stables'}
-                    onClick={openFullscreen}
-                    className="w-full h-full object-contain cursor-pointer"
+                    poster={item.poster}
+                    controls
+                    playsInline
+                    preload="none"
+                    autoPlay={isVisible}
+                    onEnded={goNext}
+                    className="w-full h-full object-contain"
                   />
-                </picture>
+                )
+              ) : (
+                <ResponsiveImage
+                  src={item.src}
+                  alt={item.alt || 'Gallery photo at What A Rush Riding Stables'}
+                  sizes="(max-width: 768px) 100vw, 1024px"
+                  onClick={openFullscreen}
+                  className="w-full h-full object-contain cursor-pointer"
+                />
               )}
             </motion.div>
           </AnimatePresence>
@@ -298,10 +336,13 @@ const GalleryCarousel = ({ items, type }) => {
                 <Play className="w-4 h-4 md:w-5 md:h-5 text-white" />
               </div>
             ) : (
-              <picture>
-                <source srcSet={toWebP(m.src)} type="image/webp" />
-                <img src={m.src} alt="" loading={i < 4 ? undefined : 'lazy'} className="w-full h-full object-cover" />
-              </picture>
+              <ResponsiveImage
+                src={m.src}
+                alt=""
+                sizes="64px"
+                loading={i < 4 ? undefined : 'lazy'}
+                className="w-full h-full object-cover"
+              />
             )}
           </button>
         ))}
@@ -328,15 +369,13 @@ const GalleryCarousel = ({ items, type }) => {
           </p>
 
           <div className="w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
-            <picture>
-              <source srcSet={toWebP(item.src)} type="image/webp" />
-              <img
-                src={item.src}
-                alt={item.alt || 'Gallery photo at What A Rush Riding Stables'}
-                className="max-w-full max-h-full object-contain cursor-pointer"
-                onClick={() => setFullscreen(false)}
-              />
-            </picture>
+            <ResponsiveImage
+              src={item.src}
+              alt={item.alt || 'Gallery photo at What A Rush Riding Stables'}
+              sizes="100vw"
+              className="max-w-full max-h-full object-contain cursor-pointer"
+              onClick={() => setFullscreen(false)}
+            />
           </div>
 
           <button

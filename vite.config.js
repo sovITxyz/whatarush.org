@@ -167,38 +167,44 @@ if (window.navigation && window.self !== window.top) {
 const addTransformIndexHtml = {
 	name: 'add-transform-index-html',
 	transformIndexHtml(html) {
-		const tags = [
-			{
-				tag: 'script',
-				attrs: { type: 'module' },
-				children: configHorizonsRuntimeErrorHandler,
-				injectTo: 'head',
-			},
-			{
-				tag: 'script',
-				attrs: { type: 'module' },
-				children: configHorizonsViteErrorHandler,
-				injectTo: 'head',
-			},
-			{
-				tag: 'script',
-				attrs: {type: 'module'},
-				children: configHorizonsConsoleErrroHandler,
-				injectTo: 'head',
-			},
-			{
-				tag: 'script',
-				attrs: { type: 'module' },
-				children: configWindowFetchMonkeyPatch,
-				injectTo: 'head',
-			},
-			{
-				tag: 'script',
-				attrs: { type: 'module' },
-				children: configNavigationHandler,
-				injectTo: 'head',
-			},
-		];
+		// The Horizons error/telemetry handlers only report to the editor/preview
+		// iframe (window.parent). In production they are dead weight and also
+		// monkeypatch console.error and window.fetch on every page load, so only
+		// inject them in dev.
+		const tags = isDev
+			? [
+				{
+					tag: 'script',
+					attrs: { type: 'module' },
+					children: configHorizonsRuntimeErrorHandler,
+					injectTo: 'head',
+				},
+				{
+					tag: 'script',
+					attrs: { type: 'module' },
+					children: configHorizonsViteErrorHandler,
+					injectTo: 'head',
+				},
+				{
+					tag: 'script',
+					attrs: {type: 'module'},
+					children: configHorizonsConsoleErrroHandler,
+					injectTo: 'head',
+				},
+				{
+					tag: 'script',
+					attrs: { type: 'module' },
+					children: configWindowFetchMonkeyPatch,
+					injectTo: 'head',
+				},
+				{
+					tag: 'script',
+					attrs: { type: 'module' },
+					children: configNavigationHandler,
+					injectTo: 'head',
+				},
+			]
+			: [];
 
 		if (!isDev && process.env.TEMPLATE_BANNER_SCRIPT_URL && process.env.TEMPLATE_REDIRECT_URL) {
 			tags.push(
@@ -254,13 +260,36 @@ export default defineConfig({
 		},
 	},
 	build: {
+		// The prerender step mounts every lazy section in Puppeteer, which makes
+		// Vite's runtime preload helper bake modulepreload links for all of them
+		// into the snapshot — defeating the code-split on first paint. Disabling
+		// modulePreload stops that; the entry script still resolves its own graph.
+		modulePreload: false,
 		rollupOptions: {
 			external: [
 				'@babel/parser',
 				'@babel/traverse',
 				'@babel/generator',
 				'@babel/types'
-			]
+			],
+			output: {
+				// Split stable, eager-only vendors into their own content-hashed
+				// chunks so an app-only deploy doesn't bust the react/framer cache.
+				// react-helmet + react-side-effect are CommonJS and reference
+				// React.PureComponent at module-eval time; they MUST live in the
+				// same chunk as React or the cross-chunk CJS interop initializes
+				// React as undefined (blank page). So they go in react-vendor too.
+				// Deliberately NOT chunking @radix-ui: it's used by both eager
+				// (Toaster, Button/Slot) and lazy sections, and Vite already
+				// tree-splits it by usage — forcing one chunk would drag the
+				// lazy-only Radix into the eager path.
+				manualChunks(id) {
+					if (!id.includes('/node_modules/')) return;
+					if (/\/node_modules\/(react|react-dom|scheduler|react-helmet|react-side-effect)\//.test(id)) return 'react-vendor';
+					if (/\/node_modules\/(framer-motion|motion-dom|motion-utils)\//.test(id)
+						|| id.includes('/node_modules/@emotion/is-prop-valid/')) return 'framer-motion';
+				},
+			},
 		}
 	}
 });

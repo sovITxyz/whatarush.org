@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { toWebP } from '@/lib/utils';
+import { srcSet } from '@/lib/utils';
 
 const HorseCard = ({ name, images, imgTick, story, index, onLearnMore }) => {
   const currentIndex = imgTick % images.length;
@@ -26,7 +26,8 @@ const HorseCard = ({ name, images, imgTick, story, index, onLearnMore }) => {
               transition={{ duration: 0.8, ease: 'easeInOut' }}
               className="absolute inset-0 w-full h-full"
             >
-              <source srcSet={toWebP(images[currentIndex])} type="image/webp" />
+              <source type="image/avif" srcSet={srcSet(images[currentIndex], 'avif')} sizes="(max-width: 768px) 100vw, 400px" />
+              <source type="image/webp" srcSet={srcSet(images[currentIndex], 'webp')} sizes="(max-width: 768px) 100vw, 400px" />
               <img
                 src={images[currentIndex]}
                 alt={`${name} - Beautiful horse at What A Rush Riding Stables`}

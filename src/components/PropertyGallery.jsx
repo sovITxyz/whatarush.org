@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { toWebP } from '@/lib/utils';
+import ResponsiveImage from '@/components/ResponsiveImage';
+import { srcSet } from '@/lib/utils';
 
 const images = [
   { src: '/images/property/main photo.jpeg', label: 'Main Photo' },
@@ -60,17 +61,15 @@ const PropertyGallery = () => {
               onClick={() => setFullscreen(index)}
             >
               <div className="aspect-square overflow-hidden">
-                <picture>
-                  <source srcSet={toWebP(image.src)} type="image/webp" />
-                  <img
-                    src={image.src}
-                    alt={`${image.label} at House of Grace beachfront property`}
-                    loading="lazy"
-                    className={`w-full h-full object-cover transition-transform duration-500 ${
-                      hoveredIndex === index ? 'scale-110' : 'scale-100'
-                    }`}
-                  />
-                </picture>
+                <ResponsiveImage
+                  src={image.src}
+                  alt={`${image.label} at House of Grace beachfront property`}
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  loading="lazy"
+                  className={`w-full h-full object-cover transition-transform duration-500 ${
+                    hoveredIndex === index ? 'scale-110' : 'scale-100'
+                  }`}
+                />
               </div>
 
               <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-opacity duration-300 ${
@@ -113,6 +112,8 @@ const PropertyGallery = () => {
                 exit={{ x: direction > 0 ? -300 : 300, opacity: 0 }}
                 transition={{ duration: 0.35, ease: 'easeInOut' }}
                 src={images[fullscreen].src}
+                srcSet={srcSet(images[fullscreen].src, 'webp')}
+                sizes="100vw"
                 alt={images[fullscreen].label}
                 className="max-w-full max-h-full object-contain cursor-pointer"
                 onClick={() => setFullscreen(null)}

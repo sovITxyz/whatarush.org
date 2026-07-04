@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { toWebP } from '@/lib/utils';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const MeetTheOwners = () => {
   return (
@@ -28,15 +28,13 @@ const MeetTheOwners = () => {
             transition={{ duration: 0.7 }}
             className="rounded-2xl overflow-hidden shadow-xl"
           >
-            <picture>
-              <source srcSet={toWebP("/images/owners/shawn&Darcy.jpeg")} type="image/webp" />
-              <img
-                src="/images/owners/shawn&Darcy.jpeg"
-                alt="Shawn and D'Arcy"
-                loading="lazy"
-                className="w-full h-[464px] object-cover object-top"
-              />
-            </picture>
+            <ResponsiveImage
+              src="/images/owners/shawn&Darcy.jpeg"
+              alt="Shawn and D'Arcy"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              loading="lazy"
+              className="w-full h-[464px] object-cover object-top"
+            />
           </motion.div>
 
           <motion.div
@@ -46,15 +44,13 @@ const MeetTheOwners = () => {
             transition={{ duration: 0.7 }}
             className="rounded-2xl overflow-hidden shadow-xl"
           >
-            <picture>
-              <source srcSet={toWebP("/images/owners/cowboyandcowgirl.jpeg")} type="image/webp" />
-              <img
-                src="/images/owners/cowboyandcowgirl.jpeg"
-                alt="Shawn and D'Arcy — Cowboy and Cowgirl"
-                loading="lazy"
-                className="w-full h-[464px] object-cover"
-              />
-            </picture>
+            <ResponsiveImage
+              src="/images/owners/cowboyandcowgirl.jpeg"
+              alt="Shawn and D'Arcy — Cowboy and Cowgirl"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              loading="lazy"
+              className="w-full h-[464px] object-cover"
+            />
           </motion.div>
         </div>
       </div>

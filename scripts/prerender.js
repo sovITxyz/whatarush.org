@@ -1,5 +1,5 @@
 import { createServer } from 'node:http';
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, statSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import puppeteer from 'puppeteer';
 
@@ -13,12 +13,6 @@ const MIME_TYPES = {
   '.txt': 'text/plain', '.xml': 'application/xml', '.ico': 'image/x-icon',
   '.mp4': 'video/mp4', '.woff2': 'font/woff2',
 };
-
-// Lazy-loaded component chunks to inject as modulepreload
-const LAZY_CHUNKS = [
-  'HorseRidingSection', 'ServicesSection', 'HorseGallery', 'LocationSection',
-  'MeetTheOwners', 'AvailableUnitsSection', 'GoogleReview', 'Footer',
-];
 
 function startServer() {
   return new Promise((resolve) => {
@@ -50,27 +44,6 @@ function startServer() {
       resolve({ server, port });
     });
   });
-}
-
-function findChunkFiles() {
-  const assetsDir = join(DIST_DIR, 'assets');
-  const files = readdirSync(assetsDir);
-  const preloads = [];
-
-  for (const chunk of LAZY_CHUNKS) {
-    const match = files.find((f) => f.startsWith(chunk) && f.endsWith('.js'));
-    if (match) preloads.push(`/assets/${match}`);
-  }
-
-  return preloads;
-}
-
-function injectModulePreloads(html, chunkPaths) {
-  const tags = chunkPaths
-    .map((p) => `<link rel="modulepreload" href="${p}">`)
-    .join('\n    ');
-
-  return html.replace('</head>', `    ${tags}\n  </head>`);
 }
 
 function validate(html) {
@@ -132,14 +105,16 @@ async function prerender() {
     // Small extra wait for Helmet side-effects and final paints
     await new Promise((r) => setTimeout(r, 1000));
 
-    let renderedHtml = await page.content();
+    // Strip any modulepreload links baked in during rendering. Mounting every
+    // lazy section in Puppeteer makes Vite's preload helper (and any stray
+    // hints) preload all below-the-fold chunks on first paint, which contends
+    // with the entry bundle + LCP image. The chunks still load on demand via
+    // their import() at mount — just off the critical path.
+    await page.evaluate(() => {
+      document.querySelectorAll('link[rel="modulepreload"]').forEach((l) => l.remove());
+    });
 
-    // Inject modulepreload links for lazy chunks
-    const chunkPaths = findChunkFiles();
-    if (chunkPaths.length > 0) {
-      renderedHtml = injectModulePreloads(renderedHtml, chunkPaths);
-      console.log(`  Injected ${chunkPaths.length} modulepreload links`);
-    }
+    const renderedHtml = await page.content();
 
     writeFileSync(join(DIST_DIR, 'index.html'), renderedHtml, 'utf-8');
 
