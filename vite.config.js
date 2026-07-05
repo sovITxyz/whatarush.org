@@ -260,10 +260,10 @@ export default defineConfig({
 		},
 	},
 	build: {
-		// The prerender step mounts every lazy section in Puppeteer, which makes
-		// Vite's runtime preload helper bake modulepreload links for all of them
-		// into the snapshot — defeating the code-split on first paint. Disabling
-		// modulePreload stops that; the entry script still resolves its own graph.
+		// First paint comes from the SSG'd HTML, not JS, so eagerly preloading
+		// the JS chunks buys nothing for LCP. Leave modulePreload off; the entry
+		// script resolves its own graph (react-vendor, framer-motion) when it
+		// runs to hydrate.
 		modulePreload: false,
 		rollupOptions: {
 			external: [
@@ -275,17 +275,16 @@ export default defineConfig({
 			output: {
 				// Split stable, eager-only vendors into their own content-hashed
 				// chunks so an app-only deploy doesn't bust the react/framer cache.
-				// react-helmet + react-side-effect are CommonJS and reference
-				// React.PureComponent at module-eval time; they MUST live in the
-				// same chunk as React or the cross-chunk CJS interop initializes
-				// React as undefined (blank page). So they go in react-vendor too.
+				// Keep react-helmet-async (vite-react-ssg's <Head> lib) in the
+				// same chunk as React: it references React at module-eval time, so
+				// co-locating it avoids cross-chunk init-order surprises.
 				// Deliberately NOT chunking @radix-ui: it's used by both eager
-				// (Toaster, Button/Slot) and lazy sections, and Vite already
+				// (Toaster, Button/Slot) and other sections, and Vite already
 				// tree-splits it by usage — forcing one chunk would drag the
-				// lazy-only Radix into the eager path.
+				// less-used Radix into the eager path.
 				manualChunks(id) {
 					if (!id.includes('/node_modules/')) return;
-					if (/\/node_modules\/(react|react-dom|scheduler|react-helmet|react-side-effect)\//.test(id)) return 'react-vendor';
+					if (/\/node_modules\/(react|react-dom|scheduler|react-helmet-async)\//.test(id)) return 'react-vendor';
 					if (/\/node_modules\/(framer-motion|motion-dom|motion-utils)\//.test(id)
 						|| id.includes('/node_modules/@emotion/is-prop-valid/')) return 'framer-motion';
 				},

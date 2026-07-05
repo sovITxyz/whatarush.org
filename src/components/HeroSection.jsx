@@ -8,8 +8,9 @@ const HeroSection = () => {
   const [playlist] = useState(() => shuffle(heroPreviewVideos));
   const [clipIndex, setClipIndex] = useState(0);
   // Mount the video only after the page has fully loaded so it never competes
-  // with the hero image / critical assets. Skipped during build-time
-  // prerendering (window.__PRERENDER__) so the snapshot stays hydratable.
+  // with the hero image / critical assets. It starts false, so it is naturally
+  // absent from the SSG snapshot (effects don't run server-side) and appears
+  // only after the client hydrates and the window `load` fires.
   const [showVideo, setShowVideo] = useState(false);
   // True while the current clip is painting frames; the static hero image
   // shows through whenever this is false (loading, clip swap, failure).
@@ -18,7 +19,6 @@ const HeroSection = () => {
   const errorCountRef = useRef(0);
 
   useEffect(() => {
-    if (window.__PRERENDER__) return undefined;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     if (document.readyState === 'complete') {
       setShowVideo(true);
@@ -34,7 +34,6 @@ const HeroSection = () => {
   // `load`. The <video> element itself still waits so decoding/playback never
   // competes with the critical rendering path.
   useEffect(() => {
-    if (window.__PRERENDER__) return undefined;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const link = document.createElement('link');
     link.rel = 'preload';
