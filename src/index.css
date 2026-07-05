@@ -147,3 +147,17 @@ body {
     animation: none;
   }
 }
+
+/* Cap iOS Safari's decoded-image memory. content-visibility:auto skips layout,
+   paint, and image decode for offscreen subtrees (and lets the browser reclaim
+   their decoded bitmaps), while keeping the content in the DOM so it is still
+   crawled/indexed. Applied to below-the-fold sections and to long image lists
+   (gallery thumbnails, property grid) so the page's ~95 images are not all
+   decoded at once — which was blanking images on iPhone. */
+.cv-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+.cv-item {
+  content-visibility: auto;
+}

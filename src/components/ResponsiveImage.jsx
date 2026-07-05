@@ -6,7 +6,7 @@ import { srcSet } from '@/lib/utils';
 // tools/generate-responsive-images.js. Pass `sizes` describing the rendered
 // width so the browser can pick the smallest sufficient variant.
 const ResponsiveImage = React.forwardRef(function ResponsiveImage(
-  { src, alt = '', sizes = '100vw', className, loading, fetchpriority, onClick, ...rest },
+  { src, alt = '', sizes = '100vw', className, loading = 'lazy', fetchpriority, onClick, ...rest },
   ref
 ) {
   return (
@@ -18,6 +18,7 @@ const ResponsiveImage = React.forwardRef(function ResponsiveImage(
         src={src}
         alt={alt}
         loading={loading}
+        decoding="async"
         fetchpriority={fetchpriority}
         onClick={onClick}
         className={className}

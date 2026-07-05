@@ -260,11 +260,10 @@ export default defineConfig({
 		},
 	},
 	build: {
-		// First paint comes from the SSG'd HTML, not JS, so eagerly preloading
-		// the JS chunks buys nothing for LCP. Leave modulePreload off; the entry
-		// script resolves its own graph (react-vendor, framer-motion) when it
-		// runs to hydrate.
-		modulePreload: false,
+		// First paint comes from the SSG'd HTML, not JS. Preload the vendor
+		// chunks (react-vendor, framer-motion) so they download in parallel with
+		// the entry instead of after it — hydration starts sooner on mobile.
+		modulePreload: true,
 		rollupOptions: {
 			external: [
 				'@babel/parser',

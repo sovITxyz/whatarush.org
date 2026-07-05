@@ -55,7 +55,7 @@ const PropertyGallery = () => {
           {images.map((image, index) => (
             <div
               key={index}
-              className="relative overflow-hidden rounded-lg shadow-md cursor-pointer"
+              className="cv-item relative overflow-hidden rounded-lg shadow-md cursor-pointer"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               onClick={() => setFullscreen(index)}

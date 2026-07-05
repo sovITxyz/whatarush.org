@@ -31,6 +31,8 @@ const HorseCard = ({ name, images, imgTick, story, index, onLearnMore }) => {
               <img
                 src={images[currentIndex]}
                 alt={`${name} - Beautiful horse at What A Rush Riding Stables`}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </motion.picture>
