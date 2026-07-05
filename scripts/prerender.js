@@ -83,7 +83,18 @@ async function prerender() {
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
+  } catch (err) {
+    // Some hosted build environments (e.g. Cloudflare Pages) can't launch
+    // headless Chrome. Skip prerendering rather than fail the build — the site
+    // still works client-rendered; only this build's SEO snapshot is skipped.
+    // For a guaranteed prerender, build in an environment with Chrome (local or
+    // GitHub Actions) and deploy the output.
+    console.warn(`  ⚠ Could not launch headless browser — skipping prerender. ${err.message}`);
+    server.close();
+    return;
+  }
 
+  try {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 50000 });
 
