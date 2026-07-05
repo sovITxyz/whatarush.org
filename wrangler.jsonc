@@ -1,0 +1,13 @@
+{
+  // Serves the prebuilt dist/ as a static site on Cloudflare (Workers Static
+  // Assets). This makes `npx wrangler deploy` work from the Git-connected build.
+  // _headers (caching) and _redirects (SPA fallback) in dist/ are honored.
+  // NOTE: "name" must match the Worker you connected in the Cloudflare dashboard.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "whatarush",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}

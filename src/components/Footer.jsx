@@ -12,7 +12,7 @@ const Footer = () => {
   // TODO: Replace placeholder URLs with actual social media profile links
   const socialLinks = [
     { icon: Facebook, name: 'Facebook', url: 'https://facebook.com/' },
-    { icon: Instagram, name: 'Instagram', url: 'https://instagram.com/' },
+    { icon: Instagram, name: 'Instagram', url: 'https://instagram.com/whatarushhorsebackriding' },
     { icon: Twitter, name: 'Twitter', url: 'https://x.com/' }
   ];
 
