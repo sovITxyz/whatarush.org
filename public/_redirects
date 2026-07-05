@@ -1,4 +1,0 @@
-# SPA fallback for Cloudflare Pages. Existing static assets (JS, CSS, images,
-# llms.txt, robots.txt, sitemap.xml) are served directly and take precedence;
-# only unmatched paths fall through to the prerendered index.html.
-/*    /index.html   200
