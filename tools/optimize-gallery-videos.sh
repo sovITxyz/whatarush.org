@@ -10,6 +10,21 @@
 #     the gallery's click-to-load heavy clips.
 # Output names are normalized to lowercase .mp4 (the masters mix .mp4/.MP4/.mov).
 # Run from the repo root after adding or changing a master.
+#
+# NOTE: beachride is intentionally skipped here. The generic "cap height at 720"
+# rule turns its 1080x1920 portrait master into a tiny 406x720 clip. Instead it
+# ships a dedicated two-pass 720x1280 encode (~24 MB, single-generation from the
+# 1080x1920 master). Regenerate that clip + poster with:
+#   ffmpeg -y -i media-src/gallery-videos/beachride.mov -vf scale=-2:1280:flags=lanczos \
+#     -c:v libx264 -b:v 1050k -preset slower -profile:v high -level 4.0 -pix_fmt yuv420p \
+#     -an -pass 1 -f mp4 /dev/null && \
+#   ffmpeg -y -i media-src/gallery-videos/beachride.mov -vf scale=-2:1280:flags=lanczos \
+#     -c:v libx264 -b:v 1050k -preset slower -profile:v high -level 4.0 -pix_fmt yuv420p \
+#     -c:a aac -b:a 128k -ac 2 -movflags +faststart -pass 2 \
+#     public/images/gallery/videos/beachride.mp4 && \
+#   ffmpeg -y -ss 2 -i public/images/gallery/videos/beachride.mp4 -frames:v 1 \
+#     -vf scale=720:1280 -c:v libwebp -quality 82 \
+#     public/images/gallery/videos/posters/beachride.webp
 set -euo pipefail
 
 SRC_DIR="media-src/gallery-videos"
@@ -19,7 +34,9 @@ POSTER_DIR="$OUT_DIR/posters"
 mkdir -p "$OUT_DIR" "$POSTER_DIR"
 
 # Long clips get a slightly higher CRF (smaller files, quality still fine).
-HIGH_CRF="beachride video2 shakey-video1"
+HIGH_CRF="video2 shakey-video1"
+# Clips with a bespoke encode that this generic pass must not overwrite.
+SKIP_REENCODE="beachride"
 SCALE="scale=-2:'min(720,ih)':flags=lanczos"
 
 shopt -s nullglob
@@ -30,6 +47,10 @@ for src in "$SRC_DIR"/*; do
   base="$(basename "$src")"
   name="$(echo "${base%.*}" | tr '[:upper:]' '[:lower:]')"
   out="$OUT_DIR/$name.mp4"
+
+  case " $SKIP_REENCODE " in
+    *" $name "*) echo "$name: skipped (dedicated encode — see header)"; continue ;;
+  esac
 
   crf=28
   case " $HIGH_CRF " in *" $name "*) crf=30 ;; esac
