@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, MessageCircle, Facebook, Instagram, Twitter } from 'lucide-react';
+import { MapPin, Phone, MessageCircle, Instagram } from 'lucide-react';
 
 const WhatsAppIcon = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -9,11 +9,8 @@ const WhatsAppIcon = ({ className }) => (
 );
 
 const Footer = () => {
-  // TODO: Replace placeholder URLs with actual social media profile links
   const socialLinks = [
-    { icon: Facebook, name: 'Facebook', url: 'https://facebook.com/' },
-    { icon: Instagram, name: 'Instagram', url: 'https://instagram.com/whatarushhorsebackriding' },
-    { icon: Twitter, name: 'Twitter', url: 'https://x.com/' }
+    { icon: Instagram, name: 'Instagram', url: 'https://instagram.com/whatarushhorsebackriding' }
   ];
 
   return (
