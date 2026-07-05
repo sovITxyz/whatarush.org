@@ -6,10 +6,15 @@ import { shuffle, videos } from '@/lib/galleryMedia';
 
 const galleryPhotos = '/images/gallery/photos';
 
-// Spread randomized view photos evenly throughout the gallery (non-views keep their order)
-function buildGallery(items) {
+const identity = (x) => x;
+
+// Spread view photos evenly throughout the gallery (non-views keep their order).
+// `orderViews` controls the view ordering: `identity` gives a deterministic order
+// (used for SSR + the first client/hydration render so the server and client HTML
+// match); `shuffle` gives the randomized order applied after mount (see HorseGallery).
+function buildGallery(items, orderViews = shuffle) {
   const isView = (item) => item.src.toLowerCase().includes('view');
-  const views = shuffle(items.filter(isView));
+  const views = orderViews(items.filter(isView));
   const others = items.filter((item) => !isView(item));
   const result = [];
   const interval = Math.max(1, Math.floor(others.length / (views.length + 1)));
@@ -25,7 +30,9 @@ function buildGallery(items) {
 }
 
 const p = galleryPhotos;
-const photos = buildGallery([
+// Raw list only — no build at module scope so no Math.random runs at import.
+// The gallery renders a deterministic order first, then reshuffles after mount.
+const photoItems = [
   { src: `${p}/Tiqandpeople.jpeg`, alt: 'Tequilla with people at What A Rush Riding Stables' },
   { src: `${p}/Carbonero.jpeg`, alt: 'Carbonero the horse at What A Rush Riding Stables' },
   { src: `${p}/Congrejeto1.jpeg`, alt: 'Congrejeto the Friesian horse' },
@@ -85,7 +92,7 @@ const photos = buildGallery([
   { src: `${p}/view9.jpeg`, alt: 'Sunset over the La Libertad beach' },
   { src: `${p}/tack5.jpeg`, alt: 'Horse riding gear and accessories' },
   { src: `${p}/tack7.jpeg`, alt: 'Saddle and tack at the riding stables' },
-]);
+];
 
 const GalleryCarousel = ({ items, type }) => {
   const [current, setCurrent] = useState(0);
@@ -400,9 +407,16 @@ const GalleryCarousel = ({ items, type }) => {
 
 const HorseGallery = () => {
   const [tab, setTab] = useState('photos');
-  // Shuffle once per page load; the lazy state initializer keeps the order
-  // stable across re-renders within the same visit.
-  const [shuffledVideos] = useState(() => shuffle(videos));
+  // Render a deterministic order for SSR + the first hydration render (so the
+  // server and client HTML match), then apply the per-visit random order after
+  // mount. Without this the Math.random shuffle would differ between server and
+  // client and trigger a hydration mismatch on the default photos tab.
+  const [photos, setPhotos] = useState(() => buildGallery(photoItems, identity));
+  const [shuffledVideos, setShuffledVideos] = useState(videos);
+  useEffect(() => {
+    setPhotos(buildGallery(photoItems));
+    setShuffledVideos(shuffle(videos));
+  }, []);
 
   return (
     <section id="horse-gallery" className="py-16 px-4 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">

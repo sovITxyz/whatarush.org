@@ -1,19 +1,25 @@
-import React, { lazy, Suspense, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useEffect } from 'react';
+// Import Head from the single-page subpath, not the package root: the root
+// entry statically imports react-router-dom (an optional peer we don't install),
+// which fails the build. The single-page entry is router-free.
+import { Head } from 'vite-react-ssg/single-page';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import { Toaster } from '@/components/ui/toaster';
 import { Button } from '@/components/ui/button';
 
-// Lazy-load below-the-fold sections (loaded as user scrolls down)
-const HorseRidingSection = lazy(() => import('@/components/HorseRidingSection'));
-const ServicesSection = lazy(() => import('@/components/ServicesSection'));
-const HorseGallery = lazy(() => import('@/components/HorseGallery'));
-const LocationSection = lazy(() => import('@/components/LocationSection'));
-const MeetTheOwners = lazy(() => import('@/components/MeetTheOwners'));
-const AvailableUnitsSection = lazy(() => import('@/components/AvailableUnitsSection'));
-const GoogleReview = lazy(() => import('@/components/GoogleReview'));
-const Footer = lazy(() => import('@/components/Footer'));
+// Static imports (not React.lazy): vite-react-ssg renders on the server with
+// renderToString, which serializes a suspended lazy boundary as its null
+// fallback — so lazy sections would be missing from the SSG HTML. Full-page
+// hydration needs the whole tree loaded anyway.
+import HorseRidingSection from '@/components/HorseRidingSection';
+import ServicesSection from '@/components/ServicesSection';
+import HorseGallery from '@/components/HorseGallery';
+import LocationSection from '@/components/LocationSection';
+import MeetTheOwners from '@/components/MeetTheOwners';
+import AvailableUnitsSection from '@/components/AvailableUnitsSection';
+import GoogleReview from '@/components/GoogleReview';
+import Footer from '@/components/Footer';
 
 const structuredData = [
   {
@@ -228,14 +234,14 @@ function App() {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>What A Rush - Beachfront Horseback Riding, Trail Rides & Palapa Rental | La Libertad, El Salvador</title>
         <meta
           name="description"
           content="Experience beachfront horseback riding, guided trail rides, horsemanship lessons, and beachfront palapa rental at What A Rush in La Libertad, El Salvador."
         />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
-      </Helmet>
+      </Head>
 
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-white focus:p-4 focus:text-teal-700 focus:font-bold focus:rounded-md focus:shadow-lg">
         Skip to main content
@@ -244,35 +250,33 @@ function App() {
       <div id="home" className="scroll-smooth">
         <Navigation />
         <HeroSection />
-        <Suspense fallback={null}>
-          <div id="main-content"><HorseRidingSection /></div>
-          <ServicesSection />
-          <HorseGallery />
-          <LocationSection
-            title="What A Rush Riding Stables is located in Playa Cangrejera El Salvador. Look for the yellow sign!"
-            mapUrl="https://maps.app.goo.gl/8DDUbCdor8oBKjEm7"
-            image="/images/location/sign.jpeg"
-            imageAlt="What A Rush Riding Stables sign at Playa Cangrejera, El Salvador"
-          />
-          <MeetTheOwners />
-          <div className="py-8 text-center bg-gradient-to-b from-amber-50 to-amber-100">
-            <Button
-              asChild
-              className="bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold py-4 px-12 rounded-full text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
-            >
-              <a href="https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested" target="_blank" rel="noopener noreferrer">
-                Contact for Booking
-              </a>
-            </Button>
-          </div>
-          <AvailableUnitsSection />
-          <LocationSection
-            title="House of Grace is a living community in El Salvador."
-            mapUrl="https://maps.app.goo.gl/hLYVpeWB1gF2EEqm9"
-          />
-          <GoogleReview />
-          <Footer />
-        </Suspense>
+        <div id="main-content"><HorseRidingSection /></div>
+        <ServicesSection />
+        <HorseGallery />
+        <LocationSection
+          title="What A Rush Riding Stables is located in Playa Cangrejera El Salvador. Look for the yellow sign!"
+          mapUrl="https://maps.app.goo.gl/8DDUbCdor8oBKjEm7"
+          image="/images/location/sign.jpeg"
+          imageAlt="What A Rush Riding Stables sign at Playa Cangrejera, El Salvador"
+        />
+        <MeetTheOwners />
+        <div className="py-8 text-center bg-gradient-to-b from-amber-50 to-amber-100">
+          <Button
+            asChild
+            className="bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold py-4 px-12 rounded-full text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
+          >
+            <a href="https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested" target="_blank" rel="noopener noreferrer">
+              Contact for Booking
+            </a>
+          </Button>
+        </div>
+        <AvailableUnitsSection />
+        <LocationSection
+          title="House of Grace is a living community in El Salvador."
+          mapUrl="https://maps.app.goo.gl/hLYVpeWB1gF2EEqm9"
+        />
+        <GoogleReview />
+        <Footer />
         <Toaster />
       </div>
     </>
