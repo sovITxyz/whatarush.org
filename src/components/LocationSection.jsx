@@ -6,7 +6,7 @@ import ResponsiveImage from '@/components/ResponsiveImage';
 
 const LocationSection = ({ title, mapUrl, image, imageAlt }) => {
   return (
-    <section className="py-16 px-4 bg-gradient-to-b from-white to-amber-50/30">
+    <section className="cv-section py-16 px-4 bg-gradient-to-b from-white to-amber-50/30">
       <div className={image ? "max-w-6xl mx-auto" : "max-w-4xl mx-auto"}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

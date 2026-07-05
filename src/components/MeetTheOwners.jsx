@@ -3,7 +3,7 @@ import ResponsiveImage from '@/components/ResponsiveImage';
 
 const MeetTheOwners = () => {
   return (
-    <section id="meet-the-owners" className="py-16 px-4 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+    <section id="meet-the-owners" className="cv-section py-16 px-4 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

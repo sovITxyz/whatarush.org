@@ -328,13 +328,13 @@ const GalleryCarousel = ({ items, type }) => {
       <div ref={thumbsRef} className="mt-4 flex gap-2 overflow-x-auto pb-2 scrollbar-thin" role="tablist" aria-label="Gallery thumbnails">
         {items.map((m, i) => (
           <button
-            key={i}
+            key={m.src}
             ref={(el) => { thumbRefs.current[i] = el; }}
             onClick={() => goTo(i)}
             role="tab"
             aria-selected={i === current}
             aria-label={type === 'video' ? `Play video ${i + 1} of ${items.length}` : `View photo ${i + 1} of ${items.length}`}
-            className={`flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden border-2 transition-all ${
+            className={`cv-item flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden border-2 transition-all ${
               i === current ? 'border-teal-500 scale-105 shadow-md' : 'border-transparent opacity-60 hover:opacity-100'
             }`}
           >
@@ -347,7 +347,6 @@ const GalleryCarousel = ({ items, type }) => {
                 src={m.src}
                 alt=""
                 sizes="64px"
-                loading={i < 4 ? undefined : 'lazy'}
                 className="w-full h-full object-cover"
               />
             )}

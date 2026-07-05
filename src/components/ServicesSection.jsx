@@ -43,7 +43,7 @@ const whatsappUrl = 'https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20web
 
 const ServicesSection = () => {
   return (
-    <section id="services" className="py-16 px-4 bg-gradient-to-b from-amber-100 via-orange-50 to-amber-50">
+    <section id="services" className="cv-section py-16 px-4 bg-gradient-to-b from-amber-100 via-orange-50 to-amber-50">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
