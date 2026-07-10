@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // Import Head from the single-page subpath, not the package root: the root
 // entry statically imports react-router-dom (an optional peer we don't install),
 // which fails the build. The single-page entry is router-free.
@@ -20,6 +20,8 @@ import MeetTheOwners from '@/components/MeetTheOwners';
 import AvailableUnitsSection from '@/components/AvailableUnitsSection';
 import GoogleReview from '@/components/GoogleReview';
 import Footer from '@/components/Footer';
+import ContactChoiceModal from '@/components/ContactChoiceModal';
+import { WA_MESSAGES } from '@/lib/contact';
 
 const structuredData = [
   {
@@ -221,6 +223,26 @@ const structuredData = [
   }
 ];
 
+const BookingCta = () => {
+  const [contactOpen, setContactOpen] = useState(false);
+
+  return (
+    <div className="py-8 text-center bg-gradient-to-b from-amber-50 to-amber-100">
+      <Button
+        onClick={() => setContactOpen(true)}
+        className="bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold py-4 px-12 rounded-full text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
+      >
+        Contact for Booking
+      </Button>
+      <ContactChoiceModal
+        open={contactOpen}
+        onOpenChange={setContactOpen}
+        whatsappMessage={WA_MESSAGES.general}
+      />
+    </div>
+  );
+};
+
 function App() {
   useEffect(() => {
     if (window.location.hash) {
@@ -260,16 +282,7 @@ function App() {
           imageAlt="What A Rush Riding Stables sign at Playa Cangrejera, El Salvador"
         />
         <MeetTheOwners />
-        <div className="py-8 text-center bg-gradient-to-b from-amber-50 to-amber-100">
-          <Button
-            asChild
-            className="bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold py-4 px-12 rounded-full text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
-          >
-            <a href="https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested" target="_blank" rel="noopener noreferrer">
-              Contact for Booking
-            </a>
-          </Button>
-        </div>
+        <BookingCta />
         <AvailableUnitsSection />
         <LocationSection
           title="House of Grace is a living community in El Salvador."
