@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Bed, Bath, MapPin, DollarSign, Wifi, Zap, Home, Bitcoin, Banknote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-const whatsappUrl = 'https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested%20in%20the%20Palapa%20Rental';
+import ContactChoiceModal from '@/components/ContactChoiceModal';
+import { WA_MESSAGES } from '@/lib/contact';
 
 const RentalUnitCard = () => {
+  const [contactOpen, setContactOpen] = useState(false);
+
   const features = [
     { icon: Bed, text: '1 Bedroom', color: 'text-blue-600' },
     { icon: Bath, text: '1 Bathroom', color: 'text-cyan-600' },
@@ -118,13 +120,17 @@ const RentalUnitCard = () => {
       </div>
 
       <Button
-        asChild
+        onClick={() => setContactOpen(true)}
         className="w-full bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-semibold py-3 rounded-lg transition-all duration-300 transform hover:scale-105"
       >
-        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-          Contact for Details
-        </a>
+        Contact for Details
       </Button>
+
+      <ContactChoiceModal
+        open={contactOpen}
+        onOpenChange={setContactOpen}
+        whatsappMessage={WA_MESSAGES.palapa}
+      />
     </motion.div>
   );
 };

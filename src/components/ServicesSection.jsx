@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, GraduationCap, Users, MapPin, Clock, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ContactChoiceModal from '@/components/ContactChoiceModal';
+import { WA_MESSAGES } from '@/lib/contact';
 
 const services = [
   {
@@ -39,9 +41,9 @@ const services = [
   },
 ];
 
-const whatsappUrl = 'https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested%20in%20your%20services';
-
 const ServicesSection = () => {
+  const [contactOpen, setContactOpen] = useState(false);
+
   return (
     <section id="services" className="cv-section py-16 px-4 bg-gradient-to-b from-amber-100 via-orange-50 to-amber-50">
       <div className="max-w-7xl mx-auto">
@@ -97,12 +99,10 @@ const ServicesSection = () => {
                   </div>
 
                   <Button
-                    asChild
+                    onClick={() => setContactOpen(true)}
                     className={`w-full bg-gradient-to-r ${service.color} text-white font-semibold py-2 rounded-lg transition-all duration-300 transform hover:scale-105`}
                   >
-                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                      Contact Us
-                    </a>
+                    Contact Us
                   </Button>
                 </div>
               </div>
@@ -110,6 +110,12 @@ const ServicesSection = () => {
           ))}
         </div>
       </div>
+
+      <ContactChoiceModal
+        open={contactOpen}
+        onOpenChange={setContactOpen}
+        whatsappMessage={WA_MESSAGES.services}
+      />
     </section>
   );
 };

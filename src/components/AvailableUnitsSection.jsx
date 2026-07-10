@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Play, X } from 'lucide-react';
 import RentalUnitCard from './RentalUnitCard';
 import PropertyGallery from './PropertyGallery';
-import { Button } from '@/components/ui/button';
 
 const AvailableUnitsSection = () => {
   const [showVideo, setShowVideo] = useState(false);
@@ -14,10 +13,6 @@ const AvailableUnitsSection = () => {
       videoRef.current.play();
     }
   }, [showVideo]);
-
-  const handleBooking = () => {
-    window.open('https://wa.me/50369866030?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27m%20interested', '_blank');
-  };
 
   return (
     <section id="available-units" className="py-16 px-4 bg-gradient-to-b from-amber-100 via-orange-50 to-amber-50">
